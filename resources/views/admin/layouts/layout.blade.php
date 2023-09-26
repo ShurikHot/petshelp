@@ -8,7 +8,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('assets/admin/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin/plugins/fontawesome-free/css/all.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets/admin/css/adminlte.css')}}">
 </head>
@@ -191,51 +191,83 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{{asset(route('admin.index'))}}" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                        <a href="{{route('admin.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-home"></i>
                             <p>
                                 Головна
-                                <span class="right badge badge-danger">New</span>
+{{--                                <span class="right badge badge-danger">New</span>--}}
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <i class="nav-icon fas fa-users-cog"></i>
                             <p>
-                                Dashboard
+                                Користувачі
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../../index.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v1</p>
+                                <a href="{{route('users.index')}}" class="nav-link">
+                                    <i class="far fa-user-circle nav-icon"></i>
+                                    <p>Усі користувачі</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../index2.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v2</p>
+                                <a href="{{route('users.patrons')}}" class="nav-link">
+                                    <i class="fas fa-dollar-sign nav-icon"></i>
+                                    <p>Меценати</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../index3.html" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v3</p>
+                                    <p>Ще щось...</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item has-treeview">
-                        <a href="../widgets.html" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-paw"></i>
                             <p>
-                                Widgets
-                                <span class="right badge badge-danger">New</span>
+                                Тварини
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('pets.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Усі тварини</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-cat nav-icon"></i>
+                                    <p>Коти</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-dog nav-icon"></i>
+                                    <p>Собаки</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-dove nav-icon"></i>
+                                    <p>Інші</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('pets.create')}}" class="nav-link">
+                                    <i class="far fa-plus-square nav-icon"></i>
+                                    <p>Додати тварину</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -269,6 +301,17 @@
 <script src="{{asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/js/adminlte.js')}}"></script>
+
+<script>
+    $('.nav-sidebar a').each(function(){
+        let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
+        let link = this.href;
+        if(link == location){
+            $(this).addClass('active');
+            $(this).closest('.has-treeview').addClass('menu-open');
+        }
+    });
+</script>
 
 </body>
 </html>
