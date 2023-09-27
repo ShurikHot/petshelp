@@ -32,43 +32,45 @@
                 </div>
                 <div class="card-body" bis_skin_checked="1">
                     @if(count($users))
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="text-center">
-                            <th style="width: 10px">ID</th>
-                            <th>Ім'я</th>
-                            <th>E-mail</th>
-                            <th>Номер телефону</th>
-                            <th style="width: 120px">Улюбленці</th>
-                            <th style="width: 140px">Дії</th>
-                        </tr>
-                        </thead>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="text-center">
+                                <th style="width: 10px">ID</th>
+                                <th>Ім'я</th>
+                                <th>E-mail</th>
+                                <th>Номер телефону</th>
+                                <th style="width: 120px">Улюбленці</th>
+                                <th style="width: 140px">Дії</th>
+                            </tr>
+                            </thead>
 
                             <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                <td class="text-center">{{$user->id}}</td>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->phone_number}}</td>
-                                <td>{{$user->favorites}}</td>
-                                <th class="justify-content-center" style="display: flex">
-                                    <a href="{{route('users.edit', $user->id)}}"><button><i class="fas fa-pencil-alt"></i></button></a>
-                                    <form action="{{route('users.lock', $user->id)}}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <button><i class="fas fa-user-lock"></i></button>
-                                    </form>
-                                    <form action="{{route('users.destroy', $user->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button><i class="fas fa-user-slash"></i></button>
-                                    </form>
-                                </th>
-                            </tr>
+                                    <td class="text-center">{{$user->id}}</td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->phone_number}}</td>
+                                    <td>{{$user->favorites}}</td>
+                                    <th class="justify-content-center" style="display: flex">
+                                        <a href="{{route('users.edit', $user->id)}}">
+                                            <button><i class="fas fa-pencil-alt"></i></button>
+                                        </a>
+                                        <form action="{{route('users.lock', $user->id)}}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <button><i class="fas fa-user-lock"></i></button>
+                                        </form>
+                                        <form action="{{route('users.destroy', $user->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </th>
+                                </tr>
                             @endforeach
                             </tbody>
-                    </table>
+                        </table>
                     @else
                         <div>Користувачів поки немає...</div>
                     @endif

@@ -35,42 +35,49 @@
                     <a href="{{route('pets.create')}}"><button class="btn btn-primary mb-2">Додати тварину</button></a>
 
                     @if(!empty($pets))
-{{--                    @if(count($pets))--}}
                         <table class="table table-bordered">
                             <thead>
                             <tr class="text-center">
                                 <th style="width: 10px">ID</th>
-                                <th>Ім'я</th>
-                                <th>E-mail</th>
-                                <th>Номер телефону</th>
-                                <th style="width: 120px">Улюбленці</th>
-                                <th style="width: 140px">Дії</th>
+                                <th>Ім'я (кличка)</th>
+                                <th>Вид</th>
+                                <th style="width: 90px"><i class="fas fa-venus-mars"></i></th>
+                                <th>Вік</th>
+                                <th>Порода</th>
+                                <th style="width: 90px">Меценати</th>
+                                <th><i class="fas fa-cut"></i></th>
+                                <th><i class="fas fa-syringe"></i></th>
+                                <th><i class="fas fa-camera"></i></th>
+                                <th><i class="fas fa-house-user"></i></th>
+                                <th style="width: 90px">Дії</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            {{--@foreach($pets as $pet)
+
+                            @foreach($pets as $pet)
                                 <tr>
                                     <td class="text-center">{{$pet->id}}</td>
                                     <td>{{$pet->name}}</td>
-                                    <td>{{$pet->email}}</td>
-                                    <td>{{$pet->phone_number}}</td>
-                                    <td>{{$pet->favorites}}</td>
+                                    <td>{{$pet->species}}</td>
+                                    <td>{{$pet->sex}}</td>
+                                    <td>{{$pet->age_month}}</td>
+                                    <td>{{$pet->breed}}</td>
+                                    <td>{{$pet->patrons}}</td>
+                                    <td class="text-center">@if ($pet->sterilization) <i class="fas fa-check"></i> @endif</td>
+                                    <td class="text-center">@if ($pet->vaccination) <i class="fas fa-check"></i> @endif</td>
+                                    <td class="text-center">@if ($pet->photo) <i class="fas fa-check"></i> @endif</td>
+                                    <td class="text-center">@if ($pet->adopted) <i class="fas fa-check"></i> @endif</td>
                                     <th class="justify-content-center" style="display: flex">
-                                        <a href="{{route('users.edit', $pet->id)}}"><button><i class="fas fa-pencil-alt"></i></button></a>
-                                        <form action="{{route('users.lock', $pet->id)}}" method="post">
-                                            @csrf
-                                            @method('PUT')
-                                            <button><i class="fas fa-user-lock"></i></button>
-                                        </form>
-                                        <form action="{{route('users.destroy', $pet->id)}}" method="post">
+                                        <a href="{{route('pets.edit', $pet->id)}}"><button><i class="fas fa-pencil-alt"></i></button></a>
+                                        <form action="{{route('pets.destroy', $pet->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button><i class="fas fa-user-slash"></i></button>
+                                            <button><i class="fas fa-trash"></i></button>
                                         </form>
                                     </th>
                                 </tr>
-                            @endforeach--}}
+                            @endforeach
                             </tbody>
                         </table>
                     @else

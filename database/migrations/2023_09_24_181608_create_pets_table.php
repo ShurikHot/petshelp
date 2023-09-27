@@ -17,11 +17,12 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->tinyInteger('age_month')->unsigned();
-            $table->enum('species', ['dog', 'cat', 'other']);
+            $table->enum('species', ['Собака', 'Кіт', 'Інше']);
+            $table->enum('sex', ['Самець', 'Самка']);
             $table->string('breed')->nullable();
             $table->string('color')->nullable();
-            $table->boolean('sterilization');
-            $table->boolean('vaccination');
+            $table->boolean('sterilization')->default(0);
+            $table->boolean('vaccination')->default(0);
             $table->string('city');
             $table->string('phone_number', 13);
             $table->string('story')->nullable();
