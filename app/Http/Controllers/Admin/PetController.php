@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Pet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PetController extends Controller
 {
@@ -15,8 +16,9 @@ class PetController extends Controller
      */
     public function index()
     {
-        $pets = Pet::query()->paginate(1);
-        return view('admin.pets.index', compact('pets'));
+        $cust_title = ' - Список тварин';
+        $pets = Pet::query()->paginate(5);
+        return view('admin.pets.index', compact('pets', 'cust_title'));
     }
 
     /**
@@ -26,7 +28,8 @@ class PetController extends Controller
      */
     public function create()
     {
-        return view('admin.pets.create');
+        $cust_title = ' - Нова тварина';
+        return view('admin.pets.create', compact('cust_title'));
     }
 
     /**
@@ -37,11 +40,13 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {
+        $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
+        $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
         $request->validate([
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
             'species' => 'required|in:"Собака","Кіт","Інше"',
-            'sex' => 'required|in:"Самець","Самка"',
+            'sex' => 'required|in:"Самець","Самиця"',
             'breed' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'sterilization' => 'boolean',
@@ -55,7 +60,15 @@ class PetController extends Controller
             'patrons' => 'nullable|string',
             'adopted' => 'boolean',
         ]);
-        Pet::query()->create($request->all());
+
+        $data = $request->all();
+
+        if ($request->hasFile('photo')) {
+            $folder = date('Y-m');
+            $data['photo'] = $request->file('photo')->store("/images/{$folder}");
+        }
+
+        Pet::query()->create($data);
         $request->session()->flash('success', 'Тварину додано');
 
         return redirect()->route('pets.index');
@@ -81,7 +94,8 @@ class PetController extends Controller
     public function edit($id)
     {
         $pet = Pet::query()->find($id);
-        return view('admin.pets.edit', compact('pet'));
+        $cust_title = ' - Редагування тварини ' . $pet->name;
+        return view('admin.pets.edit', compact('pet', 'cust_title'));
     }
 
     /**
@@ -89,15 +103,17 @@ class PetController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        /*$request->validate([
+        $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
+        $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
+        $request->validate([
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
             'species' => 'required|in:"Собака","Кіт","Інше"',
-            'sex' => 'required|in:"Самець","Самка"',
+            'sex' => 'required|in:"Самець","Самиця"',
             'breed' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'sterilization' => 'boolean',
@@ -111,21 +127,34 @@ class PetController extends Controller
             'patrons' => 'nullable|string',
             'adopted' => 'boolean',
         ]);
-        Pet::query()->update($request->all());
-        $request->session()->flash('success', 'Тварину додано');
 
-        return redirect()->route('pets.index');*/
-        dd(__METHOD__);
+        $pet = Pet::query()->find($id);
+        $data = $request->all();
+
+        if ($request->hasFile('photo')) {
+            if ($pet->photo) Storage::delete($pet->photo);
+            $folder = date('Y-m');
+            $data['photo'] = $request->file('photo')->store("/images/{$folder}");
+        }
+
+        $pet->update($data);
+        $request->session()->flash('success', 'Інформація оновлена');
+
+//        return redirect()->route('pets.index'); // редирект на першу сторінку
+        return redirect()->back(); // залишається на сторінці тварини
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        dd(__METHOD__);
+        $pet = Pet::query()->find($id);
+        if ($pet->photo) Storage::delete($pet->photo);
+        Pet::destroy($id);
+        return redirect()->route('pets.index')->with('success', 'Тварину видалено');
     }
 }

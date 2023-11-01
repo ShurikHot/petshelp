@@ -17,8 +17,9 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('email')->unique();
+            $table->string('password');
             $table->string('phone_number', 13)->nullable();
-            $table->text('favorites')->nullable();
+            $table->boolean('is_admin')->nullable()->default(0);
             $table->timestamps();
         });
     }

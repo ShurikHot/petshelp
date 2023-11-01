@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PetsHelp</title>
+    <title>{{ config('app.name') }}@yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -169,7 +169,9 @@
                     <img src="{{asset('assets/admin/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">Alexander Pierce</a>
+                    @if(isset(\Illuminate\Support\Facades\Auth::user()->name))
+                        <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                    @endif
                 </div>
             </div>
 
@@ -277,12 +279,12 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="container">
+    <div class="content-wrapper">
         <div class="row">
             <div class="col-12">
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled" style="margin-bottom: 0;">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -296,9 +298,10 @@
                 @endif
             </div>
         </div>
-    </div>
 
-    @yield('content')
+        @yield('content')
+
+    </div>
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
@@ -333,6 +336,24 @@
         }
     });
 </script>
+
+<!-- CKEditor5 -->
+<script src="{{asset('assets/vendor/ckeditor5/build/ckeditor.js')}}"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#story' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#peculiarities' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 
 </body>
 </html>

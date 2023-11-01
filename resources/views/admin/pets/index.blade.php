@@ -1,7 +1,6 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -73,7 +72,9 @@
                                         <form action="{{route('pets.destroy', $pet->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button><i class="fas fa-trash"></i></button>
+                                            <button type="submit" onclick="return confirm('Підтвердіть видалення')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </form>
                                     </th>
                                 </tr>
@@ -86,7 +87,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer mb-2">
-{{--                    {{$pets->links()}}--}}
+                    {{$pets->links('vendor.pagination.bootstrap-5')}}
                 </div>
                 <!-- /.card-footer-->
             </div>
@@ -94,5 +95,6 @@
 
         </section>
         <!-- /.content -->
-    </div>
+
+    @section('title', $cust_title)
 @endsection

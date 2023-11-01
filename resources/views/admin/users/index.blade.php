@@ -1,7 +1,6 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -51,20 +50,30 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->phone_number}}</td>
-                                    <td>{{$user->favorites}}</td>
+                                    <td>
+                                    <?php
+                                        $favorites = $user->pets->pluck('id')->all();
+                                        foreach ($favorites as $k => $v) :
+                                            ?>
+                                                <a href="{{route('pets.edit', $v)}}">{{$v . (count($favorites) !== $k+1 ? ',' : '')}}</a>
+                                            <?php
+                                        endforeach;
+                                    ?>
+                                    </td>
                                     <th class="justify-content-center" style="display: flex">
                                         <a href="{{route('users.edit', $user->id)}}">
                                             <button><i class="fas fa-pencil-alt"></i></button>
                                         </a>
-                                        <form action="{{route('users.lock', $user->id)}}" method="post">
-                                            @csrf
-                                            @method('PUT')
+                                        <a href="{{route('users.lock', $user->id)}}">
                                             <button><i class="fas fa-user-lock"></i></button>
-                                        </form>
+                                        </a>
+
                                         <form action="{{route('users.destroy', $user->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button><i class="fas fa-trash"></i></button>
+                                            <button type="submit" onclick="return confirm('Підтвердіть видалення')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </form>
                                     </th>
                                 </tr>
@@ -74,10 +83,11 @@
                     @else
                         <div>Користувачів поки немає...</div>
                     @endif
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer mb-2">
-                    {{$users->links()}}
+                    {{$users->links('vendor.pagination.bootstrap-5')}}
                 </div>
                 <!-- /.card-footer-->
             </div>
@@ -85,5 +95,5 @@
 
         </section>
         <!-- /.content -->
-    </div>
+    @section('title', $cust_title)
 @endsection

@@ -29,6 +29,11 @@ class Pet extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function patrons()
+    {
+        return $this->belongsTo(Patron::class);
     }
 }

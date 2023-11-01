@@ -1,7 +1,6 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -15,7 +14,7 @@
 
         <!-- Main content -->
         <div class="card-body" bis_skin_checked="1">
-            <form action="{{route('pets.update', $pet->id)}}" method="post">
+            <form action="{{route('pets.update', $pet->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="row" bis_skin_checked="1">
@@ -46,7 +45,7 @@
                             <label for="species">Стать тварини*</label>
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex">
                                 <option @if($pet->sex == "Самець") selected @endif>Самець</option>
-                                <option @if($pet->sex == "Самка") selected @endif>Самка</option>
+                                <option @if($pet->sex == "Самиця") selected @endif>Самиця</option>
                             </select>
                         </div>
                     </div>
@@ -140,20 +139,32 @@
                         <div class="input-group" bis_skin_checked="1">
                             <div class="custom-file" bis_skin_checked="1">
                                 <input type="file" class="custom-file-input" id="photo" name="photo">
-                                <label class="custom-file-label" for="photo">Файл</label>
-                            </div>
-                            <div class="input-group-append" bis_skin_checked="1">
-                                <span class="input-group-text">Upload</span>
+                                <label class="custom-file-label" for="photo">Оберіть файл</label>
                             </div>
                         </div>
-                        <div class="form-check mt-4" bis_skin_checked="1">
-                            <input class="form-check-input @error('adopted') is-invalid @enderror" type="checkbox" id="adopted" name="adopted" @if($pet->adopted) checked @endif>
-                            <label class="form-check-label text-red text-bold">Тварина вже має дім?</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-check mt-4" bis_skin_checked="1">
+                                    <input class="form-check-input @error('adopted') is-invalid @enderror" type="checkbox" id="adopted" name="adopted" @if($pet->adopted) checked @endif>
+                                    <label class="form-check-label text-red text-bold">Тварина вже має дім?</label>
+                                </div>
+                            </div>
+                            <div class="col-6 text-right">
+                                <?php
+                                    if ($pet->photo && is_file(public_path('uploads/' . $pet->photo))) {
+                                        $path = $pet->photo;
+                                } else {
+                                        $path = 'images/nophoto.jpg';
+                                    }
+                                ?>
+                                <img src="{{asset('/uploads') . '/' .  $path}}" alt="" style="width: 60px; height: 60px;" class="right">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Оновити данні</button>
             </form>
         </div>
-    </div>
+
+    @section('title', $cust_title)
 @endsection

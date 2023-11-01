@@ -1,7 +1,6 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -15,7 +14,7 @@
 
         <!-- Main content -->
         <div class="card-body" bis_skin_checked="1">
-            <form action="{{route('pets.store')}}" method="post">
+            <form action="{{route('pets.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row" bis_skin_checked="1">
                     <div class="col-sm-3" bis_skin_checked="1">
@@ -41,7 +40,7 @@
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex">
 {{--                                <option selected disabled>Оберіть стать</option>--}}
                                 <option @if(old('sex') == "Самець") selected @endif>Самець</option>
-                                <option @if(old('sex') == "Самка") selected @endif>Самка</option>
+                                <option @if(old('sex') == "Самиця") selected @endif>Самиця</option>
                             </select>
                         </div>
                     </div>
@@ -133,10 +132,7 @@
                         <div class="input-group" bis_skin_checked="1">
                             <div class="custom-file" bis_skin_checked="1">
                                 <input type="file" class="custom-file-input" id="photo" name="photo">
-                                <label class="custom-file-label" for="photo">Файл</label>
-                            </div>
-                            <div class="input-group-append" bis_skin_checked="1">
-                                <span class="input-group-text">Upload</span>
+                                <label class="custom-file-label" for="photo">Оберіть файл</label>
                             </div>
                         </div>
                         <div class="form-check mt-4" bis_skin_checked="1">
@@ -148,5 +144,6 @@
                 <button class="btn btn-primary" type="submit">Додати тварину</button>
             </form>
         </div>
-    </div>
+
+    @section('title', $cust_title)
 @endsection
