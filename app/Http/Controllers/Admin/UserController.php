@@ -83,11 +83,10 @@ class UserController extends Controller
         if($request->favorites) {
             $request->favorites = str_replace(' ', '', $request->favorites);
             $request->favorites = explode(',', $request->favorites);
+            $user->pets()->sync($request->favorites);
         }
-        $user->pets()->sync($request->favorites);
         $user->update($request->all());
         $request->session()->flash('success', 'Інформація оновлена');
-
 //        return redirect()->route('users.index'); // редирект на першу сторінку
         return redirect()->back(); // залишається на сторінці користувача
     }

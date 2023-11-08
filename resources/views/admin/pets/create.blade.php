@@ -30,6 +30,8 @@
 {{--                                <option selected disabled>Оберіть вид</option>--}}
                                 <option @if(old('species') == "Собака") selected @endif>Собака</option>
                                 <option @if(old('species') == "Кіт") selected @endif>Кіт</option>
+                                <option @if(old('species') == "Гризун") selected @endif>Гризун</option>
+                                <option @if(old('species') == "Пташка") selected @endif>Пташка</option>
                                 <option @if(old('species') == "Інше") selected @endif>Інше</option>
                             </select>
                         </div>
@@ -82,6 +84,20 @@
                             <label class="form-check-label">Стерилізована?</label>
                         </div>
                     </div>
+                    <div class="col-sm-3" bis_skin_checked="1">
+                        <div class="form-check" bis_skin_checked="1">
+                            <input class="form-check-input @error('special') is-invalid @enderror" type="checkbox"
+                                   id="special" name="special" @if(old('special')) checked @endif>
+                            <label class="form-check-label">Особлива?</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" bis_skin_checked="1">
+                        <div class="form-check" bis_skin_checked="1">
+                            <input class="form-check-input @error('guardianship') is-invalid @enderror" type="checkbox"
+                                   id="guardianship" name="guardianship" @if(old('guardianship')) checked @endif>
+                            <label class="form-check-label">Під опікою?</label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row" bis_skin_checked="1">
@@ -127,22 +143,58 @@
                             <textarea class="form-control" rows="2" placeholder="Меценати тварини" id="patrons"></textarea>
                         </div>
                     </div>--}}
+
                     <div class="form-group col-sm-6" bis_skin_checked="1">
-                        <label for="photo">Фото тварини</label>
-                        <div class="input-group" bis_skin_checked="1">
-                            <div class="custom-file" bis_skin_checked="1">
-                                <input type="file" class="custom-file-input" id="photo" name="photo">
-                                <label class="custom-file-label" for="photo">Оберіть файл</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="photo">Фото тварини</label>
+                                <div class="input-group" bis_skin_checked="1">
+                                    <div class="custom-file" bis_skin_checked="1">
+                                        <label class="label custom-file-upload btn btn-info mt-2" data-toggle="tooltip" title="Додати фото...">
+                                            <input type="file" class="d-none" id="photo" name="photo" accept="image/*">
+                                            <input type="hidden" class="d-none" id="base64image" name="base64image" accept="image/*">
+                                            Додати/змінити фото
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-check mt-4" bis_skin_checked="1">
+                                    <input class="form-check-input @error('adopted') is-invalid @enderror" type="checkbox" id="adopted" name="adopted" @if(old('adopted')) checked @endif>
+                                    <label class="form-check-label text-red text-bold">Тварина вже має дім?</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-check mt-4" bis_skin_checked="1">
-                            <input class="form-check-input @error('adopted') is-invalid @enderror" type="checkbox" id="adopted" name="adopted" @if(old('adopted')) checked @endif>
-                            <label class="form-check-label text-red text-bold">Тварина вже має дім?</label>
+                            <div class="col-6 text-center">
+                                    <?php
+                                    $path = 'images/nophoto.jpg';
+                                    ?>
+                                <img src="{{asset('/uploads/') . '/' .  $path}}" alt="" id="avatar" style="width: 120px; height: 120px;" class="right">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Додати тварину</button>
             </form>
+        </div>
+
+        <div class="modal fade" id="cropAvatarmodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Обрізати фото</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="img-container">
+                            <img id="uploadedAvatar" src="https://avatars0.githubusercontent.com/u/3456749">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+                        <button type="button" class="btn btn-primary" id="crop">Обрізати</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     @section('title', $cust_title)

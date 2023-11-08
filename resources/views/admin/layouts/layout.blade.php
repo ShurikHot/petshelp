@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="{{asset('assets/admin/plugins/fontawesome-free/css/all.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets/admin/css/adminlte.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin/css/style.css')}}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -308,7 +312,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 3.2.0
         </div>
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014-<script>document.write(new Date().getFullYear());</script> <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
 
     <!-- Control Sidebar -->
@@ -325,6 +329,8 @@
 <script src="{{asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/js/adminlte.js')}}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.js"></script>
 
 <script>
     $('.nav-sidebar a').each(function(){
@@ -343,17 +349,84 @@
     ClassicEditor
         .create( document.querySelector( '#story' ) )
         .catch( error => {
-            console.error( error );
+            // console.error( error );
         } );
 </script>
 <script>
     ClassicEditor
         .create( document.querySelector( '#peculiarities' ) )
         .catch( error => {
-            console.error( error );
+            // console.error( error );
         } );
 </script>
 
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        var image = document.getElementById('uploadedAvatar');
+        var input = document.getElementById('photo');
+        var cropBtn = document.getElementById('crop');
+
+        var $modal = $('#cropAvatarmodal');
+        var cropper;
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        if (document.getElementById('photo')) {
+            input.addEventListener('change', function (e) {
+                var files = e.target.files;
+                var done = function (url) {
+                    image.src = url;
+                    $modal.modal('show');
+                };
+                var reader;
+
+                if (files && files.length > 0) {
+                    let file = files[0];
+                    reader = new FileReader();
+                    reader.onload = function (e) {
+                        done(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                    // }
+                }
+            });
+
+            $modal.on('shown.bs.modal', function () {
+                cropper = new Cropper(image, {
+                    aspectRatio: 1,
+                    viewMode: 3,
+                    preview: '.preview'
+                });
+            }).on('hidden.bs.modal', function () {
+                cropper.destroy();
+                cropper = null;
+            });
+
+            cropBtn.addEventListener('click', function () {
+                var canvas;
+
+                if (cropper) {
+                    canvas = cropper.getCroppedCanvas({
+                        width: 1200,
+                        height: 1200,
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        url = URL.createObjectURL(blob);
+                        var reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64data = reader.result;
+                            $('#base64image').val(base64data);
+                            document.getElementById('avatar').src = base64data;
+                            $modal.modal('hide');
+                        }
+                    });
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>

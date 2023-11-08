@@ -42,31 +42,30 @@ class PetController extends Controller
     {
         $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
         $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
+        $request['special'] ? $request['special'] = true : $request['special'] = false;
+        $request['guardianship'] ? $request['guardianship'] = true : $request['guardianship'] = false;
         $request->validate([
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
-            'species' => 'required|in:"Собака","Кіт","Інше"',
+            'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
             'sex' => 'required|in:"Самець","Самиця"',
             'breed' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'sterilization' => 'boolean',
             'vaccination' => 'boolean',
+            'special' => 'boolean',
+            'guardianship' => 'boolean',
             'city' => 'required|string|max:255|min:2',
             'phone_number' => 'required|string|size:13',
             'story' => 'nullable|string|max:500',
             'peculiarities' => 'nullable|string|max:255',
             'wishes' => 'nullable|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'patrons' => 'nullable|string',
             'adopted' => 'boolean',
         ]);
 
         $data = $request->all();
-
-        if ($request->hasFile('photo')) {
-            $folder = date('Y-m');
-            $data['photo'] = $request->file('photo')->store("/images/{$folder}");
-        }
+        $data['photo'] = Pet::uploadPhoto($data);
 
         Pet::query()->create($data);
         $request->session()->flash('success', 'Тварину додано');
@@ -107,35 +106,38 @@ class PetController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
         $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
+        $request['special'] ? $request['special'] = true : $request['special'] = false;
+        $request['guardianship'] ? $request['guardianship'] = true : $request['guardianship'] = false;
         $request->validate([
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
-            'species' => 'required|in:"Собака","Кіт","Інше"',
+            'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
             'sex' => 'required|in:"Самець","Самиця"',
             'breed' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'sterilization' => 'boolean',
             'vaccination' => 'boolean',
+            'special' => 'boolean',
+            'guardianship' => 'boolean',
             'city' => 'required|string|max:255|min:2',
             'phone_number' => 'required|string|size:13',
             'story' => 'nullable|string|max:500',
             'peculiarities' => 'nullable|string|max:255',
             'wishes' => 'nullable|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'patrons' => 'nullable|string',
             'adopted' => 'boolean',
         ]);
 
+//dd($request);
         $pet = Pet::query()->find($id);
         $data = $request->all();
+        $data['photo'] = Pet::uploadPhoto($data);
 
-        if ($request->hasFile('photo')) {
-            if ($pet->photo) Storage::delete($pet->photo);
-            $folder = date('Y-m');
-            $data['photo'] = $request->file('photo')->store("/images/{$folder}");
-        }
+        if ($pet->photo && !str_starts_with($data['base64image'], 'images')) Storage::delete($pet->photo);
+//        dd($data);
 
         $pet->update($data);
         $request->session()->flash('success', 'Інформація оновлена');

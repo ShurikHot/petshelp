@@ -3384,6 +3384,14 @@ input[type="button"].btn-block {
     pointer-events: none;
     cursor: default; }
 
+.nav-link, .dropdown-item {
+    color: #54ACD2!important;
+}
+
+.nav-link:hover, .dropdown-item:hover {
+    color: #48569E!important;
+}
+
 .nav-tabs {
   border-bottom: 1px solid #dee2e6; }
   .nav-tabs .nav-item {
@@ -4042,7 +4050,7 @@ input[type="button"].btn-block {
 .page-link {
   position: relative;
   display: block;
-  padding: 0.5rem 0.75rem;
+  /*padding: 0.5rem 0.75rem;*/
   margin-left: -1px;
   line-height: 1.25;
   color: #007bff;
@@ -4064,18 +4072,18 @@ input[type="button"].btn-block {
 
 .page-item:first-child .page-link {
   margin-left: 0;
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem; }
+  /*border-top-left-radius: 0.25rem;*/
+  /*border-bottom-left-radius: 0.25rem;*/ }
 
 .page-item:last-child .page-link {
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem; }
+  /*border-top-right-radius: 0.25rem;*/
+  /*border-bottom-right-radius: 0.25rem;*/ }
 
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff; }
+  background-color: #54ACD2;
+  border-color: #54ACD2; }
 
 .page-item.disabled .page-link {
   color: #6c757d;
@@ -8071,7 +8079,7 @@ h1, h2, h3, h4, h5,
     padding-left: 20px;
     padding-right: 20px;
     font-weight: 400;
-    color: #000000;
+    /*color: #000000;*/
     text-transform: uppercase;
     letter-spacing: 2px;
     opacity: 1 !important; }
@@ -8188,7 +8196,7 @@ h1, h2, h3, h4, h5,
     .ftco-navbar-light.scrolled .nav-link {
       padding-top: 0.9rem !important;
       padding-bottom: 0.9rem !important;
-      color: #000000 !important; }
+      /*color: #000000 !important;*/ }
       .ftco-navbar-light.scrolled .nav-link.active {
         color: #54ACD2 !important; }
     .ftco-navbar-light.scrolled.awake {
@@ -8201,7 +8209,7 @@ h1, h2, h3, h4, h5,
       -o-transition: .3s all ease-out;
       transition: .3s all ease-out; }
     .ftco-navbar-light.scrolled .navbar-brand {
-      color: #000000; }
+      color: #54ACD2; }
 
 .navbar-brand {
   font-weight: 800;
@@ -8658,7 +8666,7 @@ h1, h2, h3, h4, h5,
   -webkit-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  border: 1px solid #f0f0f0; }
+  /*border: 1px solid #f0f0f0;*/ }
   @media (max-width: 991.98px) {
     .product {
       margin-bottom: 30px; } }
@@ -8773,13 +8781,13 @@ h1, h2, h3, h4, h5,
         color: #fff;
         width: 100%;
         background: #54ACD2;
-        width: 40px;
+        width: 130px;
         height: 40px;
         margin: 0 auto;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         -ms-border-radius: 50%;
-        border-radius: 50%; }
+        border-radius: 28%; }
       .product .text .bottom-area .m-auto {
         margin: 0 auto; }
   .product:hover {
@@ -8917,11 +8925,13 @@ h1, h2, h3, h4, h5,
   font-size: 13px;
   color: #000000; }
 
+/*
 .cart-list {
   overflow-x: scroll; }
+*/
 
-.table {
-  min-width: 1000px !important;
+/*.table {
+  !*min-width: 1000px !important;*!
   width: 100%;
   text-align: center; }
   .table th {
@@ -8959,7 +8969,29 @@ h1, h2, h3, h4, h5,
       .table tbody tr td.product-name h3 {
         font-size: 16px; }
     .table tbody tr td.total, .table tbody tr td.price {
-      color: #000000; }
+      color: #000000; }*/
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #6F6F6F;
+}
+
+.table th,
+.table td {
+    padding: 0.35rem;
+    vertical-align: middle;
+    border-top: 1px solid #EDF1FF;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #EDF1FF;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #EDF1FF;
+}
 
 .cart-wrap .btn-primary {
   display: inline-block; }
@@ -9184,7 +9216,7 @@ textarea.form-control {
   font-size: 24px; }
 
 .ftco-section {
-  padding: 6em 0;
+  padding: 3em 0;
   position: relative; }
 
 .ftco-no-pt {
@@ -10011,3 +10043,7 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+.border-radius-15 {
+    border-radius: 15px;
+}

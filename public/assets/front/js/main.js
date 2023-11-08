@@ -51,7 +51,7 @@
 
 	// loader
 	var loader = function() {
-		setTimeout(function() { 
+		setTimeout(function() {
 			if($('#ftco-loader').length > 0) {
 				$('#ftco-loader').removeClass('show');
 			}
@@ -85,7 +85,7 @@
 	      }
 	    }
 		});
-	
+
 		$('.carousel-testimony').owlCarousel({
 			center: true,
 			loop: true,
@@ -106,6 +106,28 @@
 				}
 			}
 		});
+
+        $('.carousel-partners').owlCarousel({
+            loop: true,
+            margin: 30,
+            nav: false,
+            autoplay: true,
+            // center: true,
+            items:1,
+            stagePadding: 0,
+            navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+            responsive:{
+                0:{
+                    items: 2
+                },
+                600:{
+                    items: 4
+                },
+                1000:{
+                    items: 6
+                }
+            }
+        });
 
 	};
 	carousel();
@@ -144,19 +166,19 @@
 
 			if (st > 150) {
 				if ( !navbar.hasClass('scrolled') ) {
-					navbar.addClass('scrolled');	
+					navbar.addClass('scrolled');
 				}
-			} 
+			}
 			if (st < 150) {
 				if ( navbar.hasClass('scrolled') ) {
 					navbar.removeClass('scrolled sleep');
 				}
-			} 
+			}
 			if ( st > 350 ) {
 				if ( !navbar.hasClass('awake') ) {
-					navbar.addClass('awake');	
+					navbar.addClass('awake');
 				}
-				
+
 				if(sd.length > 0) {
 					sd.addClass('sleep');
 				}
@@ -174,9 +196,9 @@
 	};
 	scrollWindow();
 
-	
+
 	var counter = function() {
-		
+
 		$('#section-counter').waypoint( function( direction ) {
 
 			if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
@@ -193,7 +215,7 @@
 					  }, 7000
 					);
 				});
-				
+
 			}
 
 		} , { offset: '95%' } );
@@ -206,7 +228,7 @@
 		$('.ftco-animate').waypoint( function( direction ) {
 
 			if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
-				
+
 				i++;
 
 				$(this.element).addClass('item-animate');
@@ -228,9 +250,9 @@
 							el.removeClass('item-animate');
 						},  k * 50, 'easeInOutExpo' );
 					});
-					
+
 				}, 100);
-				
+
 			}
 
 		} , { offset: '95%' } );
@@ -299,22 +321,22 @@
 	var goHere = function() {
 
 		$('.mouse-icon').on('click', function(event){
-			
+
 			event.preventDefault();
 
 			$('html,body').animate({
 				scrollTop: $('.goto-here').offset().top
 			}, 500, 'easeInOutExpo');
-			
+
 			return false;
 		});
 	};
 	goHere();
 
 
-	function makeTimer() {
+	/*function makeTimer() {
 
-		var endTime = new Date("21 December 2019 9:56:00 GMT+01:00");			
+		var endTime = new Date("21 December 2019 9:56:00 GMT+01:00");
 		endTime = (Date.parse(endTime) / 1000);
 
 		var now = new Date();
@@ -322,7 +344,7 @@
 
 		var timeLeft = endTime - now;
 
-		var days = Math.floor(timeLeft / 86400); 
+		var days = Math.floor(timeLeft / 86400);
 		var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
 		var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
 		var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
@@ -334,11 +356,62 @@
 		$("#days").html(days + "<span>Days</span>");
 		$("#hours").html(hours + "<span>Hours</span>");
 		$("#minutes").html(minutes + "<span>Minutes</span>");
-		$("#seconds").html(seconds + "<span>Seconds</span>");		
+		$("#seconds").html(seconds + "<span>Seconds</span>");
 
-}
+}*/
 
-setInterval(function() { makeTimer(); }, 1000);
+/*setInterval(function() { makeTimer(); }, 1000);*/
+
+    //Додати в "улюбленці"
+    $('.btn-favorite').on('click', function () {
+        var id = $(this).data('id');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/pets/' + id + '/favorite',
+            type: 'POST',
+            data: {
+                id: id,
+            },
+            success: function(response) {
+                $('.btn-favorite').text('Додано до улюблених!');
+            },
+            error: function(xhr, status, error) {
+            }
+        })
+    })
+
+    //Видалити з "улюбленців"
+    $('.rem-favorite').on('click', function () {
+        var id = $(this).data('id');
+        var acc = $(this).data('acc');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/pets/' + id + '/remove',
+            type: 'POST',
+            data: {
+                id: id,
+            },
+            success: function(response) {
+                if (acc) {
+                    $('.hide-id-' + id).attr('hidden', true);
+                } else {
+                    $('.btn-favorite').text('Додати до улюблених');
+                    $('.rem-favorite').attr('hidden', true);
+                }
+            },
+            error: function(xhr, status, error) {
+            }
+        })
+    })
+
+    //Модальне для опікунства на сторінці тварини
+    $('.give-home').on('click', function (){
+        $('.modal').modal('show');
+    })
 
 
 

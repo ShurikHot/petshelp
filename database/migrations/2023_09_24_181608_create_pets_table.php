@@ -17,12 +17,14 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->tinyInteger('age_month')->unsigned();
-            $table->enum('species', ['Собака', 'Кіт', 'Інше']);
+            $table->enum('species', ['Собака', 'Кіт', 'Гризун', 'Пташка', 'Інше']);
             $table->enum('sex', ['Самець', 'Самиця']);
             $table->string('breed')->nullable();
             $table->string('color')->nullable();
             $table->boolean('sterilization')->default(0);
             $table->boolean('vaccination')->default(0);
+            $table->boolean('special')->default(0); //статус "особливий"
+            $table->boolean('guardianship ')->default(0); //статус "під опікою"
             $table->string('city');
             $table->string('phone_number', 13);
             $table->string('story')->nullable();

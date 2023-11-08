@@ -67,5 +67,45 @@ class UserController extends Controller
         return redirect()->route('login.create');
     }
 
+    public function account($item)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user->pets;
+            switch ($item) {
+                case 'profile':
+                    return view('front.account', ['user' => $user]);
+                    break;
+                case 'favorite':
+                    return view('front.favorite', ['user' => $user]);
+                    break;
+                default:
+                    return view('front.account', ['user' => $user]);
+            }
+        }
+        return view('front.account');
+    }
+
+    public function addFavorite($pet_id)
+    {
+        $user = Auth::user();
+        $fav = $user->pets->pluck('id')->toArray();
+        if (!in_array($pet_id, $fav)) {
+            $fav[] = $pet_id;
+            $user->pets()->sync($fav);
+            return response()->json(['message' => 'success']);
+        }
+    }
+
+    public function remFavorite($pet_id)
+    {
+        $user = Auth::user();
+        $fav = $user->pets->pluck('id')->toArray();
+        $rem = array_search($pet_id, $fav);
+        unset($fav[$rem]);
+        $user->pets()->sync($fav);
+        return response()->json(['message' => 'success']);
+    }
+
 
 }

@@ -36,6 +36,8 @@
                             <select class="form-control @error('species') is-invalid @enderror" id="species" name="species">
                                 <option @if($pet->species == "Собака") selected @endif>Собака</option>
                                 <option @if($pet->species == "Кіт") selected @endif>Кіт</option>
+                                <option @if($pet->species == "Гризун") selected @endif>Гризун</option>
+                                <option @if($pet->species == "Пташка") selected @endif>Пташка</option>
                                 <option @if($pet->species == "Інше") selected @endif>Інше</option>
                             </select>
                         </div>
@@ -73,18 +75,38 @@
                 </div>
 
                 <div class="row" bis_skin_checked="1">
-                    <div class="col-sm-3" bis_skin_checked="1">
-                        <div class="form-check ml-2 mr-5 mb-2 mt-3" bis_skin_checked="1">
-                            <input class="form-check-input @error('vaccination') is-invalid @enderror" type="checkbox"
-                                   id="vaccination" name="vaccination" @if($pet->vaccination) checked @endif>
-                            <label class="form-check-label">Вакцинована?</label>
+                    <div class="col-sm-6" bis_skin_checked="1">
+                        <div class="row">
+                            <div class="col-sm-6" bis_skin_checked="1">
+                                <div class="form-check ml-2 mr-5 mb-2 mt-3" bis_skin_checked="1">
+                                    <input class="form-check-input @error('vaccination') is-invalid @enderror" type="checkbox"
+                                           id="vaccination" name="vaccination" @if($pet->vaccination) checked @endif>
+                                    <label class="form-check-label">Вакцинована?</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" bis_skin_checked="1">
+                                <div class="form-check mt-3" bis_skin_checked="1">
+                                    <input class="form-check-input @error('sterilization') is-invalid @enderror" type="checkbox"
+                                           id="sterilization" name="sterilization" @if($pet->sterilization) checked @endif>
+                                    <label class="form-check-label">Стерилізована?</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-3" bis_skin_checked="1">
-                        <div class="form-check mt-3" bis_skin_checked="1">
-                            <input class="form-check-input @error('sterilization') is-invalid @enderror" type="checkbox"
-                                   id="sterilization" name="sterilization" @if($pet->sterilization) checked @endif>
-                            <label class="form-check-label">Стерилізована?</label>
+                        <div class="row">
+                            <div class="col-sm-6" bis_skin_checked="1">
+                                <div class="form-check ml-2 mr-5 mb-2" bis_skin_checked="1">
+                                    <input class="form-check-input @error('special') is-invalid @enderror" type="checkbox"
+                                           id="special" name="special" @if($pet->special) checked @endif>
+                                    <label class="form-check-label">Особлива?</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" bis_skin_checked="1">
+                                <div class="form-check" bis_skin_checked="1">
+                                    <input class="form-check-input @error('guardianship') is-invalid @enderror" type="checkbox"
+                                           id="guardianship" name="guardianship" @if($pet->guardianship) checked @endif>
+                                    <label class="form-check-label">Під опікою?</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -135,35 +157,61 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-6" bis_skin_checked="1">
-                        <label for="photo">Фото тварини</label>
-                        <div class="input-group" bis_skin_checked="1">
-                            <div class="custom-file" bis_skin_checked="1">
-                                <input type="file" class="custom-file-input" id="photo" name="photo">
-                                <label class="custom-file-label" for="photo">Оберіть файл</label>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-6">
+                                <label for="photo">Фото тварини</label>
+                                <div class="input-group" bis_skin_checked="1">
+                                    <div class="custom-file" bis_skin_checked="1">
+                                        <label class="label custom-file-upload btn btn-info mt-2" data-toggle="tooltip" title="Додати фото...">
+                                            <input type="file" class="d-none" id="photo" name="photo" accept="image/*" value="{{$pet->photo}}">
+                                            <input type="hidden" class="d-none" id="base64image" name="base64image" accept="image/*" value="{{$pet->photo}}">
+                                            Додати/змінити фото
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="form-check mt-4" bis_skin_checked="1">
                                     <input class="form-check-input @error('adopted') is-invalid @enderror" type="checkbox" id="adopted" name="adopted" @if($pet->adopted) checked @endif>
                                     <label class="form-check-label text-red text-bold">Тварина вже має дім?</label>
                                 </div>
                             </div>
-                            <div class="col-6 text-right">
+                            <div class="col-6 text-center">
                                 <?php
+//                                    dd((public_path('uploads/' . $pet->photo)));
                                     if ($pet->photo && is_file(public_path('uploads/' . $pet->photo))) {
                                         $path = $pet->photo;
-                                } else {
+                                    } else {
                                         $path = 'images/nophoto.jpg';
                                     }
                                 ?>
-                                <img src="{{asset('/uploads') . '/' .  $path}}" alt="" style="width: 60px; height: 60px;" class="right">
+                                <img src="{{asset('/uploads') . '/' .  $path}}" alt="" id="avatar" style="width: 120px; height: 120px;" class="right">
                             </div>
                         </div>
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Оновити данні</button>
             </form>
+        </div>
+
+        <div class="modal fade" id="cropAvatarmodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Обрізати фото</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="img-container">
+                            <img id="uploadedAvatar" src="https://avatars0.githubusercontent.com/u/3456749">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+                        <button type="button" class="btn btn-primary" id="crop">Обрізати</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     @section('title', $cust_title)
