@@ -8,7 +8,6 @@ Route::get('/pets/{species}', 'App\Http\Controllers\PetController@show')->name('
 
 Route::post('/pets/{id}/favorite', 'App\Http\Controllers\UserController@addFavorite')->name('addFavorite')->where(['id' => '[0-9]+']);
 Route::post('/pets/{id}/remove', 'App\Http\Controllers\UserController@remFavorite')->name('remFavorite')->where(['id' => '[0-9]+']);
-//Route::match(['get', 'put'], '/profile', 'App\Http\Controllers\UserController@profile')->name('profile');
 Route::any('/account/{item}', 'App\Http\Controllers\UserController@account')->name('account');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'admin'], function () {

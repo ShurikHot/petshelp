@@ -27,15 +27,15 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="../../index3.html" class="nav-link">Home</a>
+                <a href="{{url('/')}}" class="nav-link">Home</a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
+            {{--<li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
-            </li>
+            </li>--}}
         </ul>
 
         <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
+        {{--<ul class="navbar-nav ml-auto">
             <!-- Navbar Search -->
             <li class="nav-item">
                 <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -153,7 +153,7 @@
                     <i class="fas fa-th-large"></i>
                 </a>
             </li>
-        </ul>
+        </ul>--}}
     </nav>
     <!-- /.navbar -->
 
@@ -161,7 +161,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{url('/')}}" target="_blank" class="brand-link">
-            <img src="{{asset('assets/admin/img/AdminLTELogo.png')}}" alt="PetsHelp Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="{{asset('assets/admin/img/ph-logo3.png')}}" alt="PetsHelp Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">PetsHelp</span>
         </a>
 
@@ -170,11 +170,11 @@
             <!-- Sidebar user (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="{{asset('assets/admin/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+                    <img src="{{asset('assets/admin/img/user_b.png')}}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                     @if(isset(\Illuminate\Support\Facades\Auth::user()->name))
-                        <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                        <a href="{{route('users.edit', \Illuminate\Support\Facades\Auth::user()->id)}}" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
                     @endif
                 </div>
             </div>

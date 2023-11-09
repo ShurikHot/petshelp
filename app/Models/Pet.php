@@ -69,10 +69,15 @@ class Pet extends Model
         $y = round($age / 12);
         $m = $age % 12;
 
-        $years = ($y % 10 == 1 && $y % 100 != 11) ? $forms_y[0] : ($y % 10 >= 2 && $y % 10 <= 4 && ($y % 100 < 10 || $y % 100 >= 20) ? $forms_y[1] : $forms_y[2]);
-        $month = ($m % 10 == 1 && $m % 100 != 11) ? $forms_m[0] : ($m % 10 >= 2 && $m % 10 <= 4 && ($m % 100 < 10 || $m % 100 >= 20) ? $forms_m[1] : $forms_m[2]);
+        $years = self::plural($forms_y, $y);
+        $month = self::plural($forms_m, $m);
 
         return ($y != 0 ? ($y . ' ' . $years . ' ') : '') . ($y != 0 && $m != 0 ? ' і ' : '') . ($m != 0 ? ($m . ' ' . $month) : '');
+    }
+
+    public static function plural($forms, $num)
+    {
+        return ($num % 10 == 1 && $num % 100 != 11) ? $forms[0] : ($num % 10 >= 2 && $num % 10 <= 4 && ($num % 100 < 10 || $num % 100 >= 20) ? $forms[1] : $forms[2]);
     }
 
     public static function speciesPet($species)

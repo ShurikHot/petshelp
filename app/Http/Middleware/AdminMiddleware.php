@@ -20,7 +20,8 @@ class AdminMiddleware
         if (Auth::check() && Auth::user()->is_admin) {
             return $next($request);
         } else {
-            abort(404);
+//            abort(404);
+          return redirect()->route('login.create');
         }
     }
 }

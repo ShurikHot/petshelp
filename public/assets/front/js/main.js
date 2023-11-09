@@ -408,12 +408,14 @@
         })
     })
 
-    //Модальне для опікунства на сторінці тварини
+    //Модальне для опікунства допомоги на сторінці тварини
     $('.give-home').on('click', function (){
-        $('.modal').modal('show');
+        $('#modal-home').modal('show');
     })
 
-
+    $('.give-money').on('click', function (){
+        $('#modal-money').modal('show');
+    })
 
 })(jQuery);
 
