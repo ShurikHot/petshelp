@@ -7,9 +7,9 @@
     }
     ?>
     <a href="{{route('single', $pet->id)}}" class="img-prod border-radius-15"><img class="img-fluid" src="{{$path}}" alt="Colorlib Template">
-        <span class="status" style="background: #8B4D93; min-width: 82px" @if(!$pet->special) hidden="" @endif>Особливий</span>
-        <span class="status" style="background: #DF4E0F; min-width: 82px" @if(!$pet->guardianship) hidden="" @endif>Під опікою</span>
-        <span class="status" @if(!$pet->adopted) hidden="" @endif>Вже має дім</span>
+        <span class="status" style="background: #8B4D93; min-width: 82px" @if(!$pet->special)hidden="" @endif>Особливий</span>
+        <span class="status" style="background: #DF4E0F; min-width: 82px" @if(!$pet->guardianship)hidden="" @endif>Під опікою</span>
+        <span class="status" @if(!$pet->adopted)hidden="" @endif>Вже має дім</span>
         <div class="overlay"></div>
     </a>
     <div class="text py-3 pb-4 px-3 text-center border-radius-15" style="background: #e8ffff">

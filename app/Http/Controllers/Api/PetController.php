@@ -1,42 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PetResource;
 use App\Models\Pet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 
 class PetController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        $cust_title = ' - Список тварин';
-        $pets = Pet::query()->paginate(5);
-        return view('admin.pets.index', compact('pets', 'cust_title'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function create()
-    {
-        $cust_title = ' - Нова тварина';
-        return view('admin.pets.create', compact('cust_title'));
+        return PetResource::collection(Pet::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -57,44 +45,27 @@ class PetController extends Controller
             'special' => 'boolean',
             'guardianship' => 'boolean',
             'city' => 'required|string|max:255|min:2',
-            'phone_number' => 'required|string|size:13', // !!!формат +380987654321
+            'phone_number' => 'required|string|size:12', // !!!формат 380987654321
             'story' => 'nullable|string|max:500',
             'peculiarities' => 'nullable|string|max:255',
             'wishes' => 'nullable|string|max:255',
             'patrons' => 'nullable|string',
             'adopted' => 'boolean',
         ]);
+        $pet = Pet::query()->create($data);
 
-        $data['photo'] = Pet::uploadPhoto($data);
-
-        Pet::query()->create($data);
-        $request->session()->flash('success', 'Тварину додано');
-
-        return redirect()->route('pets.index');
+        return new PetResource($pet);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return PetResource
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function edit($id)
-    {
-        $pet = Pet::query()->find($id);
-        $cust_title = ' - Редагування тварини ' . $pet->name;
-        return view('admin.pets.edit', compact('pet', 'cust_title'));
+        return new PetResource(Pet::query()->findOrFail($id));
     }
 
     /**
@@ -102,11 +73,10 @@ class PetController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-
         $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
         $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
         $request['special'] ? $request['special'] = true : $request['special'] = false;
@@ -124,7 +94,7 @@ class PetController extends Controller
             'special' => 'boolean',
             'guardianship' => 'boolean',
             'city' => 'required|string|max:255|min:2',
-            'phone_number' => 'required|string|size:13', // !!!формат +380987654321
+            'phone_number' => 'required|string|size:12', // !!!формат 380987654321
             'story' => 'nullable|string|max:500',
             'peculiarities' => 'nullable|string|max:255',
             'wishes' => 'nullable|string|max:255',
@@ -133,28 +103,22 @@ class PetController extends Controller
         ]);
 
         $pet = Pet::query()->find($id);
-        $data['photo'] = Pet::uploadPhoto($data);
-
-        if ($pet->photo && !str_starts_with($data['base64image'], 'images')) Storage::delete($pet->photo);
-
         $pet->update($data);
-        $request->session()->flash('success', 'Інформація оновлена');
+        return new PetResource($pet);
 
-//        return redirect()->route('pets.index'); // редирект на першу сторінку
-        return redirect()->back(); // залишається на сторінці тварини
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $pet = Pet::query()->find($id);
-        if ($pet->photo) Storage::delete($pet->photo);
-        Pet::destroy($id);
-        return redirect()->route('pets.index')->with('success', 'Тварину видалено');
+        $pet->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
