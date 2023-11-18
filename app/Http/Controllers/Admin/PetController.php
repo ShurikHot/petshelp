@@ -40,12 +40,12 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {
-        $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
-        $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
-        $request['special'] ? $request['special'] = true : $request['special'] = false;
-        $request['guardianship'] ? $request['guardianship'] = true : $request['guardianship'] = false;
-        $request['adopted'] ? $request['adopted'] = true : $request['adopted'] = false;
-        $data = $request->validate([
+        $request['sterilization'] = isset($request['sterilization']);
+        $request['vaccination'] = isset($request['vaccination']);
+        $request['special'] = isset($request['special']);
+        $request['guardianship'] = isset($request['guardianship']);
+        $request['adopted'] = isset($request['adopted']);
+        $request->validate([
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
             'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
@@ -65,6 +65,7 @@ class PetController extends Controller
             'adopted' => 'boolean',
         ]);
 
+        $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);
 
         Pet::query()->create($data);
@@ -106,13 +107,12 @@ class PetController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
-        $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
-        $request['special'] ? $request['special'] = true : $request['special'] = false;
-        $request['guardianship'] ? $request['guardianship'] = true : $request['guardianship'] = false;
-        $request['adopted'] ? $request['adopted'] = true : $request['adopted'] = false;
-        $data = $request->validate([
+        $request['sterilization'] = isset($request['sterilization']);
+        $request['vaccination'] = isset($request['vaccination']);
+        $request['special'] = isset($request['special']);
+        $request['guardianship'] = isset($request['guardianship']);
+        $request['adopted'] = isset($request['adopted']);
+        $request->validate([
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
             'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
@@ -132,6 +132,7 @@ class PetController extends Controller
             'adopted' => 'boolean',
         ]);
 
+        $data = $request->all();
         $pet = Pet::query()->find($id);
         $data['photo'] = Pet::uploadPhoto($data);
 

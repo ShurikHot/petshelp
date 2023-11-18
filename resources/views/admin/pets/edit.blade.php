@@ -81,14 +81,14 @@
                                 <div class="form-check ml-2 mr-5 mb-2 mt-3" bis_skin_checked="1">
                                     <input class="form-check-input @error('vaccination') is-invalid @enderror" type="checkbox"
                                            id="vaccination" name="vaccination" @if($pet->vaccination) checked @endif>
-                                    <label class="form-check-label">Вакцинована?</label>
+                                    <label for="vaccination" class="form-check-label">Вакцинована?</label>
                                 </div>
                             </div>
                             <div class="col-sm-6" bis_skin_checked="1">
                                 <div class="form-check mt-3" bis_skin_checked="1">
                                     <input class="form-check-input @error('sterilization') is-invalid @enderror" type="checkbox"
                                            id="sterilization" name="sterilization" @if($pet->sterilization) checked @endif>
-                                    <label class="form-check-label">Стерилізована?</label>
+                                    <label for="sterilization" class="form-check-label">Стерилізована?</label>
                                 </div>
                             </div>
                         </div>
@@ -97,14 +97,14 @@
                                 <div class="form-check ml-2 mr-5 mb-2" bis_skin_checked="1">
                                     <input class="form-check-input @error('special') is-invalid @enderror" type="checkbox"
                                            id="special" name="special" @if($pet->special) checked @endif>
-                                    <label class="form-check-label">Особлива?</label>
+                                    <label for="special" class="form-check-label">Особлива?</label>
                                 </div>
                             </div>
                             <div class="col-sm-6" bis_skin_checked="1">
                                 <div class="form-check" bis_skin_checked="1">
                                     <input class="form-check-input @error('guardianship') is-invalid @enderror" type="checkbox"
                                            id="guardianship" name="guardianship" @if($pet->guardianship) checked @endif>
-                                    <label class="form-check-label">Під опікою?</label>
+                                    <label for="guardianship" class="form-check-label">Під опікою?</label>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                                 </div>
                                 <div class="form-check mt-4" bis_skin_checked="1">
                                     <input class="form-check-input @error('adopted') is-invalid @enderror" type="checkbox" id="adopted" name="adopted" @if($pet->adopted) checked @endif>
-                                    <label class="form-check-label text-red text-bold">Тварина вже має дім?</label>
+                                    <label for="adopted" class="form-check-label text-red text-bold">Тварина вже має дім?</label>
                                 </div>
                             </div>
                             <div class="col-6 text-center">
