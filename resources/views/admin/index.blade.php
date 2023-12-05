@@ -36,7 +36,43 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    Головна сторінка адмінки
+{{--                    Головна сторінка адмінки--}}
+                    <style>
+                        .weather-widget, .spotify {
+                            background-color: #fff;
+                            border-radius: 10px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            padding: 20px;
+                            text-align: center;
+                            margin-bottom: 10px;
+                        }
+
+                        .weather-icon {
+                            width: 60px;
+                            height: 60px;
+                        }
+
+                        .temperature {
+                            font-size: 24px;
+                            margin: 10px 0;
+                        }
+
+                        .description {
+                            color: #666;
+                        }
+                    </style>
+
+                    <div class="weather-widget"></div>
+
+                    <div class="spotify">
+                        Spotify API
+                        <input type="text" id="artist" name="artist" placeholder="Введіть ID артиста">
+                        <button type="submit" id="find-button">Знайти</button>
+                        <br>
+                        наприклад, 0k17h0D3J5VfsdmQ1iZtE9
+                        <div class="artist-info"></div>
+                    </div>
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

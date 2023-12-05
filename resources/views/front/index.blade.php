@@ -4,35 +4,55 @@
 
     <section id="home-section" class="hero">
         <div class="home-slider owl-carousel">
-            <div class="slider-item" style="background-image: url({{asset('assets/front/images/frontpage-02.jpg')}});">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+            @if(isset($sliders))
+                @foreach($sliders as $slider)
+                    <div class="slider-item" style="background-image: url({{asset('uploads/' . $slider->photo)}});">
+                        <div class="overlay"></div>
+                        <div class="container">
+                            <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
-                        <div class="col-md-12 ftco-animate text-center">
-                            <h1 class="mb-2">Безліч друзів чекають на тебе...</h1>
-                            <h2 class="subheading mb-4">Дайте лапкам шанс на щастя!</h2>
-                            <p><a href="{{route('pets', 'all')}}" class="btn btn-primary">Вперед!</a></p>
+                                <div class="col-md-12 ftco-animate text-center">
+                                    <h1 class="mb-2">{{$slider->title}}</h1>
+                                    <h2 class="subheading mb-4">{{$slider->tagline}}</h2>
+                                    <p><a href="{{route('pets', 'all')}}" class="btn btn-primary">Вперед!</a></p>
+                                </div>
+
+                            </div>
                         </div>
+                    </div>
+                @endforeach
+            @else
+                {{--якщо для усіх слайдів виставлений статус НЕАКТИВНИЙ, тоді будуть використовуватися 2 резервні слайда--}}
+                <div class="slider-item" style="background-image: url({{asset('assets/front/images/frontpage-02.jpg')}});">
+                    <div class="overlay"></div>
+                    <div class="container">
+                        <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
+                            <div class="col-md-12 ftco-animate text-center">
+                                <h1 class="mb-2">Безліч друзів чекають на тебе...</h1>
+                                <h2 class="subheading mb-4">Дайте лапкам шанс на щастя!</h2>
+                                <p><a href="{{route('pets', 'all')}}" class="btn btn-primary">Вперед!</a></p>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="slider-item" style="background-image: url({{asset('assets/front/images/frontpage-01.jpg')}});">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+                <div class="slider-item" style="background-image: url({{asset('assets/front/images/frontpage-01.jpg')}});">
+                    <div class="overlay"></div>
+                    <div class="container">
+                        <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
-                        <div class="col-sm-12 ftco-animate text-center">
-                            <h1 class="mb-2">Кожна тваринка чекає свою людину!</h1>
-                            <h2 class="subheading mb-4">Пухнасте серце віддячить зповна!</h2>
-                            <p><a href="{{route('pets', 'all')}}" class="btn btn-primary">Вперед!</a></p>
+                            <div class="col-sm-12 ftco-animate text-center">
+                                <h1 class="mb-2">Кожна тваринка чекає свою людину!</h1>
+                                <h2 class="subheading mb-4">Пухнасте серце віддячить зповна!</h2>
+                                <p><a href="{{route('pets', 'all')}}" class="btn btn-primary">Вперед!</a></p>
+                            </div>
+
                         </div>
-
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </section>
 

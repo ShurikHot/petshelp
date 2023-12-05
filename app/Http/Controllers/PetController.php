@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet;
+use App\Models\Slider;
 use Illuminate\Support\Facades\Auth;
 
 class PetController extends Controller
@@ -12,8 +13,9 @@ class PetController extends Controller
         $frontPets = Pet::query()->get()->where('adopted', '=', '0')->random(8); // в ідеалі популярні тварини
         $randomPet = Pet::query()->get()->where('adopted', '=', '0')->random(1);
         $already = Pet::query()->get()->where('adopted', '=', '1')->count();
+        $sliders = Slider::query()->where('is_active', '=', '1')->get();
 
-        return view('front.index', compact('frontPets', 'randomPet', 'already'));
+        return view('front.index', compact('frontPets', 'randomPet', 'already', 'sliders'));
     }
 
     public function show($species)

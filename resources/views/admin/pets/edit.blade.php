@@ -176,7 +176,6 @@
                             </div>
                             <div class="col-6 text-center">
                                 <?php
-//                                    dd((public_path('uploads/' . $pet->photo)));
                                     if ($pet->photo && is_file(public_path('uploads/' . $pet->photo))) {
                                         $path = $pet->photo;
                                     } else {
@@ -214,5 +213,5 @@
             </div>
         </div>
 
-    @section('title', $cust_title)
+    @section('title', $cust_title ?? '')
 @endsection

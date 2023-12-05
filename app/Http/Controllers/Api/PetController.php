@@ -24,7 +24,7 @@ class PetController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return PetResource
      */
     public function store(Request $request)
     {
@@ -63,9 +63,10 @@ class PetController extends Controller
      * @param  int  $id
      * @return PetResource
      */
-    public function show($id)
+    public function show(Pet $pet)
     {
-        return new PetResource(Pet::query()->findOrFail($id));
+//        return new PetResource(Pet::query()->findOrFail($id));
+        return new PetResource($pet);
     }
 
     /**
@@ -73,9 +74,9 @@ class PetController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return PetResource
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pet $pet)
     {
         $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
         $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
@@ -102,7 +103,7 @@ class PetController extends Controller
             'adopted' => 'boolean',
         ]);
 
-        $pet = Pet::query()->find($id);
+//        $pet = Pet::query()->find($id);
         $pet->update($data);
         return new PetResource($pet);
 
@@ -114,9 +115,9 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pet $pet)
     {
-        $pet = Pet::query()->find($id);
+//        $pet = Pet::query()->find($id);
         $pet->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

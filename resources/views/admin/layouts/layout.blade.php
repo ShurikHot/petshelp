@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <title>{{ config('app.name') }}@yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -205,6 +207,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('sliders.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-images"></i>
+                            <p>
+                                Слайдер
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users-cog"></i>
@@ -341,6 +351,66 @@
             $(this).closest('.has-treeview').addClass('menu-open');
         }
     });
+
+    const weatherBl = document.querySelector('.weather-widget')
+    if (weatherBl) {
+        weatherBl.innerHTML = `
+            <img src="{{asset('assets/front/images/spinner-1s-200px.gif')}}" alt="Weather Icon" class="weather-icon">
+        `
+    }
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: 'weather',
+            type: 'POST',
+            success: function(response) {
+                let temp = Math.round(response.main.temp);
+                let ico = response.weather[0].icon;
+
+                weatherBl.innerHTML = `
+                    <img src="https://openweathermap.org/img/wn/${ico}@2x.png" alt="Weather Icon" class="weather-icon">
+                    <div class="temperature"></div>
+                    <div class="description"></div>
+                    <div class="location"></div>
+                `
+                $('.temperature').text(temp + '°C')
+                $('.description').text(response.weather[0].description)
+                $('.location').text(response.name + ', ' + response.sys.country)
+            },
+            error: function(xhr, status, error) {
+                console.log('error');
+            }
+        })
+
+    const spotifyBl = document.querySelector('.artist-info')
+
+    $('#find-button').on('click', function () {
+        artist_id = $('#artist').val();
+        if (artist_id) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: `spotify/${artist_id}`,
+                type: 'GET',
+                success: function (response) {
+                    spotifyBl.innerHTML = `
+                        <img src="${response.images[2].url}">
+                        <div>${response.name}</div>
+                        <div><a href="${response.external_urls.spotify}">Link</a></div>
+                        <div>${response.genres[0]}</div>
+                    `
+                },
+                error: function(xhr, status, error) {
+                    console.log('error');
+                }
+            })
+        }
+        $('#artist').val('');
+    })
+
+
 </script>
 
 <!-- CKEditor5 -->
@@ -364,10 +434,12 @@
     window.addEventListener('DOMContentLoaded', function () {
         var image = document.getElementById('uploadedAvatar');
         var input = document.getElementById('photo');
+        var slider_crop = document.getElementById('slider_crop');
         var cropBtn = document.getElementById('crop');
 
         var $modal = $('#cropAvatarmodal');
         var cropper;
+        var aspectRatio;
 
         $('[data-toggle="tooltip"]').tooltip();
 
@@ -392,8 +464,13 @@
             });
 
             $modal.on('shown.bs.modal', function () {
+                if (slider_crop && slider_crop.innerHTML.trim() !== '') {
+                    aspectRatio = '3 / 2'
+                } else {
+                    aspectRatio = '1'
+                }
                 cropper = new Cropper(image, {
-                    aspectRatio: 1,
+                    aspectRatio: aspectRatio,
                     viewMode: 3,
                     preview: '.preview'
                 });
@@ -404,11 +481,19 @@
 
             cropBtn.addEventListener('click', function () {
                 var canvas;
-
+                var width;
+                var height;
+                if (slider_crop && slider_crop.innerHTML.trim() !== '') {
+                    width = 0;
+                    height = 0;
+                } else {
+                    width = 1200;
+                    height = 1200;
+                }
                 if (cropper) {
                     canvas = cropper.getCroppedCanvas({
-                        width: 1200,
-                        height: 1200,
+                        width: width,
+                        height: height,
                     });
 
                     canvas.toBlob(function (blob) {

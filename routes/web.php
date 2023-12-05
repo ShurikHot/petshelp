@@ -16,6 +16,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 
     Route::resource('/users', 'UserController');
     Route::get('/users/{user}/lock', 'UserController@lock')->name('users.lock');
     Route::resource('/pets', 'PetController');
+    Route::resource('/sliders', 'SliderController');
 });
 
 Route::group(['middleware' => 'guest'], function () {
@@ -26,3 +27,7 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::get('logout', 'App\Http\Controllers\UserController@logout')->name('logout')->middleware('auth');
+
+/* API-practice */
+Route::post('/weather', 'App\Http\Controllers\Api\TestApiController@weatherApi');
+Route::any('/spotify/{id}', 'App\Http\Controllers\Api\TestApiController@spotifyApi');

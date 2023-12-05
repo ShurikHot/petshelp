@@ -58,9 +58,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::query()->find($id);
         $cust_title = ' - Редагування користувача ' . $user->name;
         return view('admin.users.edit', compact('user', 'cust_title'));
     }
@@ -72,14 +71,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required|string|max:255|min:2',
             'email' => 'required|string|max:255',
             'phone_number' => 'string|size:13',
         ]);
-        $user = User::query()->find($id);
         if($request->favorites) {
             $request->favorites = str_replace(' ', '', $request->favorites);
             $request->favorites = explode(',', $request->favorites);
@@ -91,7 +89,7 @@ class UserController extends Controller
         return redirect()->back(); // залишається на сторінці користувача
     }
 
-    public function lock($id)
+    public function lock(User $user)
     {
         dd(__METHOD__);
     }
@@ -102,12 +100,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::query()->find($id);
         $user->pets()->sync([]);
-        User::destroy($id);
-
+        $user->delete();
         return redirect()->route('users.index')->with('success', 'Користувача видалено');
     }
 }

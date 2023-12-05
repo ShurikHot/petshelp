@@ -70,7 +70,6 @@ class PetController extends Controller
 
         Pet::query()->create($data);
         $request->session()->flash('success', 'Тварину додано');
-
         return redirect()->route('pets.index');
     }
 
@@ -91,9 +90,8 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Pet $pet)
     {
-        $pet = Pet::query()->find($id);
         $cust_title = ' - Редагування тварини ' . $pet->name;
         return view('admin.pets.edit', compact('pet', 'cust_title'));
     }
@@ -105,7 +103,7 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pet $pet)
     {
         $request['sterilization'] = isset($request['sterilization']);
         $request['vaccination'] = isset($request['vaccination']);
@@ -133,14 +131,12 @@ class PetController extends Controller
         ]);
 
         $data = $request->all();
-        $pet = Pet::query()->find($id);
         $data['photo'] = Pet::uploadPhoto($data);
 
         if ($pet->photo && !str_starts_with($data['base64image'], 'images')) Storage::delete($pet->photo);
-
+        dd($data, $pet->photo);
         $pet->update($data);
         $request->session()->flash('success', 'Інформація оновлена');
-
 //        return redirect()->route('pets.index'); // редирект на першу сторінку
         return redirect()->back(); // залишається на сторінці тварини
     }
@@ -151,11 +147,10 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Pet $pet)
     {
-        $pet = Pet::query()->find($id);
         if ($pet->photo) Storage::delete($pet->photo);
-        Pet::destroy($id);
+        $pet->delete();
         return redirect()->route('pets.index')->with('success', 'Тварину видалено');
     }
 }

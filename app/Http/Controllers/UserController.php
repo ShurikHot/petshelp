@@ -16,7 +16,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required|string|max:255|min:2',
             'email' => 'required|email|unique:users',
@@ -32,7 +31,6 @@ class UserController extends Controller
         $request->session()->flash('success', 'Реєстрація успішна');
         Auth::login($user);
         return redirect()->route('home');
-
     }
 
     public function loginForm()

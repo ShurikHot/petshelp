@@ -197,5 +197,5 @@
             </div>
         </div>
 
-    @section('title', $cust_title)
+    @section('title', $cust_title ?? '')
 @endsection

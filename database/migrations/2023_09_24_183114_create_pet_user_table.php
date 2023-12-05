@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('pet_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pet_id')->unsigned();
+            $table->foreign('pet_id')->references('id')->on('pets');
             $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

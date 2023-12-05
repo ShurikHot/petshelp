@@ -10,11 +10,21 @@ class PetInfoController extends Controller
 {
     public function countAll()
     {
-        return Pet::query()->get()->count();
+        $data = Pet::query()->get()->count();
+        return response()
+            ->json([
+                'count_all' => $data,
+            ])
+            ->setStatusCode(200);
     }
 
     public function countAdopted()
     {
-        return Pet::query()->where('adopted', 1)->get()->count();
+        $data = Pet::query()->where('adopted', 1)->get()->count();
+        return response()
+            ->json([
+                'count_adopted' => $data,
+            ])
+            ->setStatusCode(200);
     }
 }

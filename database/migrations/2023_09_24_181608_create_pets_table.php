@@ -24,7 +24,7 @@ return new class extends Migration
             $table->boolean('sterilization')->default(0);
             $table->boolean('vaccination')->default(0);
             $table->boolean('special')->default(0); //статус "особливий"
-            $table->boolean('guardianship ')->default(0); //статус "під опікою"
+            $table->boolean('guardianship')->default(0); //статус "під опікою"
             $table->string('city');
             $table->string('phone_number', 13);
             $table->string('story')->nullable();
