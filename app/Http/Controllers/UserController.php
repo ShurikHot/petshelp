@@ -71,17 +71,12 @@ class UserController extends Controller
             $user = Auth::user();
             $user->pets;
             switch ($item) {
-                case 'profile':
-                    return view('front.account', ['user' => $user]);
-                    break;
                 case 'favorite':
-                    return view('front.favorite', ['user' => $user]);
-                    break;
+                    return view('front.favorite', ['user' => $user, 'cust_title' => ' :: Улюбленці']);
                 default:
-                    return view('front.account', ['user' => $user]);
+                    return view('front.account', ['user' => $user, 'cust_title' => ' :: Аккаунт']);
             }
         }
-        return view('front.account');
     }
 
     public function addFavorite($pet_id)
@@ -104,6 +99,4 @@ class UserController extends Controller
         $user->pets()->sync($fav);
         return response()->json(['message' => 'success']);
     }
-
-
 }

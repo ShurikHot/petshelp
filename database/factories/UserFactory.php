@@ -28,7 +28,7 @@ class UserFactory extends Factory
         ];
     }
 
-        public function adminAccount()
+    public function adminAccount()
     {
         return $this->state([
             'name' => 'Admin',

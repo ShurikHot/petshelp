@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pet\StoreRequest;
+use App\Http\Requests\Pet\UpdateRequest;
 use App\Http\Resources\PetResource;
 use App\Models\Pet;
 use Illuminate\Http\Request;
@@ -26,34 +28,19 @@ class PetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return PetResource
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
-        $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
-        $request['special'] ? $request['special'] = true : $request['special'] = false;
-        $request['guardianship'] ? $request['guardianship'] = true : $request['guardianship'] = false;
-        $request['adopted'] ? $request['adopted'] = true : $request['adopted'] = false;
-        $data = $request->validate([
-            'name' => 'required|string|max:255|min:2',
-            'age_month' => 'required|integer',
-            'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
-            'sex' => 'required|in:"Самець","Самиця"',
-            'breed' => 'nullable|string|max:255',
-            'color' => 'nullable|string|max:255',
-            'sterilization' => 'boolean',
-            'vaccination' => 'boolean',
-            'special' => 'boolean',
-            'guardianship' => 'boolean',
-            'city' => 'required|string|max:255|min:2',
-            'phone_number' => 'required|string|size:12', // !!!формат 380987654321
-            'story' => 'nullable|string|max:500',
-            'peculiarities' => 'nullable|string|max:255',
-            'wishes' => 'nullable|string|max:255',
-            'patrons' => 'nullable|string',
-            'adopted' => 'boolean',
-        ]);
+        $request->validated();
+
+        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
+        foreach ($bool_params as $param) {
+            $request[$param] = isset($request[$param]);
+        }
+
+        $data = $request->all();
         $pet = Pet::query()->create($data);
 
+//        return PetResource::make($pet);
         return new PetResource($pet);
     }
 
@@ -65,7 +52,6 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-//        return new PetResource(Pet::query()->findOrFail($id));
         return new PetResource($pet);
     }
 
@@ -76,37 +62,19 @@ class PetController extends Controller
      * @param  int  $id
      * @return PetResource
      */
-    public function update(Request $request, Pet $pet)
+    public function update(UpdateRequest $request, Pet $pet)
     {
-        $request['sterilization'] ? $request['sterilization'] = true : $request['sterilization'] = false;
-        $request['vaccination'] ? $request['vaccination'] = true : $request['vaccination'] = false;
-        $request['special'] ? $request['special'] = true : $request['special'] = false;
-        $request['guardianship'] ? $request['guardianship'] = true : $request['guardianship'] = false;
-        $request['adopted'] ? $request['adopted'] = true : $request['adopted'] = false;
-        $data = $request->validate([
-            'name' => 'required|string|max:255|min:2',
-            'age_month' => 'required|integer',
-            'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
-            'sex' => 'required|in:"Самець","Самиця"',
-            'breed' => 'nullable|string|max:255',
-            'color' => 'nullable|string|max:255',
-            'sterilization' => 'boolean',
-            'vaccination' => 'boolean',
-            'special' => 'boolean',
-            'guardianship' => 'boolean',
-            'city' => 'required|string|max:255|min:2',
-            'phone_number' => 'required|string|size:12', // !!!формат 380987654321
-            'story' => 'nullable|string|max:500',
-            'peculiarities' => 'nullable|string|max:255',
-            'wishes' => 'nullable|string|max:255',
-            'patrons' => 'nullable|string',
-            'adopted' => 'boolean',
-        ]);
+        $request->validated();
 
-//        $pet = Pet::query()->find($id);
+        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
+        foreach ($bool_params as $param) {
+            $request[$param] = isset($request[$param]);
+        }
+
+        $data = $request->all();
+
         $pet->update($data);
         return new PetResource($pet);
-
     }
 
     /**
@@ -117,9 +85,7 @@ class PetController extends Controller
      */
     public function destroy(Pet $pet)
     {
-//        $pet = Pet::query()->find($id);
         $pet->delete();
-
         return response(null, Response::HTTP_NO_CONTENT);
     }
 }

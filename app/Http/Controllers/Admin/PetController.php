@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pet\StoreRequest;
+use App\Http\Requests\Pet\UpdateRequest;
 use App\Models\Pet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +18,7 @@ class PetController extends Controller
      */
     public function index()
     {
-        $cust_title = ' - Список тварин';
+        $cust_title = ' :: Список тварин';
         $pets = Pet::query()->paginate(5);
         return view('admin.pets.index', compact('pets', 'cust_title'));
     }
@@ -28,7 +30,7 @@ class PetController extends Controller
      */
     public function create()
     {
-        $cust_title = ' - Нова тварина';
+        $cust_title = ' :: Нова тварина';
         return view('admin.pets.create', compact('cust_title'));
     }
 
@@ -38,32 +40,14 @@ class PetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $request['sterilization'] = isset($request['sterilization']);
-        $request['vaccination'] = isset($request['vaccination']);
-        $request['special'] = isset($request['special']);
-        $request['guardianship'] = isset($request['guardianship']);
-        $request['adopted'] = isset($request['adopted']);
-        $request->validate([
-            'name' => 'required|string|max:255|min:2',
-            'age_month' => 'required|integer',
-            'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
-            'sex' => 'required|in:"Самець","Самиця"',
-            'breed' => 'nullable|string|max:255',
-            'color' => 'nullable|string|max:255',
-            'sterilization' => 'boolean',
-            'vaccination' => 'boolean',
-            'special' => 'boolean',
-            'guardianship' => 'boolean',
-            'city' => 'required|string|max:255|min:2',
-            'phone_number' => 'required|string|size:13', // !!!формат +380987654321
-            'story' => 'nullable|string|max:500',
-            'peculiarities' => 'nullable|string|max:255',
-            'wishes' => 'nullable|string|max:255',
-            'patrons' => 'nullable|string',
-            'adopted' => 'boolean',
-        ]);
+        $request->validated();
+
+        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
+        foreach ($bool_params as $param) {
+            $request[$param] = isset($request[$param]);
+        }
 
         $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);
@@ -92,7 +76,7 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        $cust_title = ' - Редагування тварини ' . $pet->name;
+        $cust_title = ' :: Редагування тварини ' . $pet->name;
         return view('admin.pets.edit', compact('pet', 'cust_title'));
     }
 
@@ -103,38 +87,19 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Pet $pet)
+    public function update(UpdateRequest $request, Pet $pet)
     {
-        $request['sterilization'] = isset($request['sterilization']);
-        $request['vaccination'] = isset($request['vaccination']);
-        $request['special'] = isset($request['special']);
-        $request['guardianship'] = isset($request['guardianship']);
-        $request['adopted'] = isset($request['adopted']);
-        $request->validate([
-            'name' => 'required|string|max:255|min:2',
-            'age_month' => 'required|integer',
-            'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
-            'sex' => 'required|in:"Самець","Самиця"',
-            'breed' => 'nullable|string|max:255',
-            'color' => 'nullable|string|max:255',
-            'sterilization' => 'boolean',
-            'vaccination' => 'boolean',
-            'special' => 'boolean',
-            'guardianship' => 'boolean',
-            'city' => 'required|string|max:255|min:2',
-            'phone_number' => 'required|string|size:13', // !!!формат +380987654321
-            'story' => 'nullable|string|max:500',
-            'peculiarities' => 'nullable|string|max:255',
-            'wishes' => 'nullable|string|max:255',
-            'patrons' => 'nullable|string',
-            'adopted' => 'boolean',
-        ]);
+        $request->validated();
+
+        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
+        foreach ($bool_params as $param) {
+            $request[$param] = isset($request[$param]);
+        }
 
         $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);
 
         if ($pet->photo && !str_starts_with($data['base64image'], 'images')) Storage::delete($pet->photo);
-        dd($data, $pet->photo);
         $pet->update($data);
         $request->session()->flash('success', 'Інформація оновлена');
 //        return redirect()->route('pets.index'); // редирект на першу сторінку

@@ -20,6 +20,7 @@ class PetController extends Controller
 
     public function show($species)
     {
+        $cust_title = ' :: Пошук друга';
         switch ($species) {
             case 'all':
                 $pets = Pet::query()->where('adopted', '=', '0')->paginate(12);
@@ -40,11 +41,14 @@ class PetController extends Controller
                 $pets = Pet::query()->where('adopted', '=', '0')->paginate(12);
                 $species = '';
         }
-        return view('front.pets', compact('pets', 'species'));
+        return view('front.pets', compact('pets', 'species', 'cust_title'));
     }
 
     public function single($id)
     {
+        $pet = Pet::query()->find($id);
+        $cust_title = ' :: ' . $pet->name;
+
         if (Auth::user()) {
             $user = Auth::user();
             $fav = $user->pets->pluck('id')->toArray();
@@ -53,8 +57,7 @@ class PetController extends Controller
             $is_fav = false;
         }
 
-        $pet = Pet::query()->find($id);
         $related = Pet::query()->where('species', '=', $pet->species)->where('adopted', '=', '0')->get()->random(4);
-        return view('front.single', compact('pet', 'related', 'is_fav'));
+        return view('front.single', compact('pet', 'related', 'is_fav', 'cust_title'));
     }
 }

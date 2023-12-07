@@ -52,6 +52,9 @@ class Pet extends Model
                 $image_base64 = base64_decode($image_parts[1]);
 
                 $folderPath = public_path() . '/uploads/images/' . date('Y-m') . '/';
+                if (!is_dir($folderPath)) {
+                    mkdir($folderPath, 0777, true);
+                }
                 $filename = time() . '.' . $image_type;
                 $file = $folderPath . $filename;
                 file_put_contents($file, $image_base64);

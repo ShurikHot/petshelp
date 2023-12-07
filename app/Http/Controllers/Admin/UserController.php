@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $cust_title = ' - Список користувачів';
+        $cust_title = ' :: Список користувачів';
         $users = User::query()->with('pets')->paginate(5);
         return view('admin.users.index', compact('users', 'cust_title'));
     }
@@ -60,7 +60,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $cust_title = ' - Редагування користувача ' . $user->name;
+        $cust_title = ' :: Редагування користувача ' . $user->name;
         return view('admin.users.edit', compact('user', 'cust_title'));
     }
 

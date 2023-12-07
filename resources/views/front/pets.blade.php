@@ -44,3 +44,4 @@
     </section>
 
 @endsection
+@section('title', $cust_title ?? '')

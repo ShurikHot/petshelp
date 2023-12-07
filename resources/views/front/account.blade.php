@@ -57,3 +57,4 @@
         <br><br>
     @endif
 @endsection
+@section('title', $cust_title ?? '')
