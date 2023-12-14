@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
             'breed' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'city' => 'required|string|max:255|min:2',
-            'phone_number' => 'required|string|size:12', // !!!формат 380987654321
+            'phone_number' => 'required|string|size:13', // !!!формат +380987654321
             'story' => 'nullable|string|max:500',
             'peculiarities' => 'nullable|string|max:255',
             'wishes' => 'nullable|string|max:255',

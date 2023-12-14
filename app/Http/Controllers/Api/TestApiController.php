@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class TestApiController extends Controller
 {
@@ -23,7 +24,6 @@ class TestApiController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url . '?' . http_build_query($options));
 
-
         $res = curl_exec($ch);
         $data = json_decode($res, true);
         curl_close($ch);
@@ -31,12 +31,15 @@ class TestApiController extends Controller
         return $data;
     }
 
-    public function spotifyApi($artist_id)
+    public function spotifyApi($artist_id, Request $request)
     {
-        $token = $this->getSpotifyToken();
-        $access_token = $token['access_token'];
+        if ($request->cookie('access_token') == null) {
+            $token = $this->getSpotifyToken();
+            Cookie::queue('access_token', $token['access_token'], 59);
+        }
 
-        $artist_id = '0k17h0D3J5VfsdmQ1iZtE9';
+        $access_token = $request->cookie('access_token');
+        // $artist_id = '0k17h0D3J5VfsdmQ1iZtE9';
 
         $url = 'https://api.spotify.com/v1/artists/' . $artist_id;
 

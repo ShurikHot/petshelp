@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pet\StoreRequest;
-use App\Http\Requests\Pet\UpdateRequest;
 use App\Models\Pet;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PetController extends Controller
@@ -43,11 +41,7 @@ class PetController extends Controller
     public function store(StoreRequest $request)
     {
         $request->validated();
-
-        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
-        foreach ($bool_params as $param) {
-            $request[$param] = isset($request[$param]);
-        }
+        Pet::boolParams($request);
 
         $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);
@@ -87,14 +81,11 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateRequest $request, Pet $pet)
+    public function update(StoreRequest $request, Pet $pet)
     {
         $request->validated();
 
-        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
-        foreach ($bool_params as $param) {
-            $request[$param] = isset($request[$param]);
-        }
+        $pet->boolParams($request);
 
         $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);

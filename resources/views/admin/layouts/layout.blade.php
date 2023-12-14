@@ -357,7 +357,7 @@
         weatherBl.innerHTML = `
             <img src="{{asset('assets/front/images/spinner-1s-200px.gif')}}" alt="Weather Icon" class="weather-icon">
         `
-    }
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -382,6 +382,7 @@
                 console.log('error');
             }
         })
+    }
 
     const spotifyBl = document.querySelector('.artist-info')
 

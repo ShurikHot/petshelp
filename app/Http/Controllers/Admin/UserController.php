@@ -91,7 +91,7 @@ class UserController extends Controller
 
     public function lock(User $user)
     {
-        dd(__METHOD__);
+//        dd(__METHOD__);
     }
 
     /**

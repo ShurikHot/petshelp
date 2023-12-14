@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\Pet\StoreRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -105,6 +106,13 @@ class Pet extends Model
         return asset("assets/front/images/icon-{$spec}.png");
     }
 
-
+    public static function boolParams(StoreRequest $request)
+    {
+        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
+        foreach ($bool_params as $param) {
+            $request[$param] = isset($request[$param]);
+        }
+        return $request;
+    }
 
 }
