@@ -15,23 +15,23 @@
                                         @foreach($user->pets as $pet)
                                             <tr class="text-center hide-id-{{$pet->id}}">
                                                 <td class="product-remove"><a href="#"><span class="ion-ios-close rem-favorite" data-acc="1" data-id="{{$pet->id}}"></span></a></td>
-                                                            <?php
-                                                            if (isset($pet->photo)) {
-                                                                $path = asset('/uploads/') . '/' . $pet->photo;
-                                                            } else {
-                                                                $path = asset('/uploads/') . '/' . 'images/nophoto.jpg';
-                                                            }
-                                                            ?>
-                                                <td class="image-prod" style="max-width: 150px">
+                                                    <?php
+                                                    if (isset($pet->photo)) {
+                                                        $path = asset('/uploads/') . '/' . $pet->photo;
+                                                    } else {
+                                                        $path = asset('/uploads/') . '/' . 'images/nophoto.jpg';
+                                                    }
+                                                    ?>
+                                                <td class="image-prod max-width-150">
                                                     <div class="img">
                                                         <a href="{{route('single', $pet->id)}}">
-                                                            <img src="{{$path}}" alt="" style="width: 50%; height: auto;">
+                                                            <img src="{{$path}}" alt="">
                                                         </a>
                                                     </div>
                                                 </td>
 
                                                 <td class="product-name">
-                                                    <img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt="" style="width: 30px; height: 30px">
+                                                    <img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt="">
                                                     <h5><a href="{{route('single', $pet->id)}}">{{$pet->name}}</a></h5>
                                                 </td>
 

@@ -174,7 +174,7 @@
                                     <label for="adopted" class="form-check-label text-red text-bold">Тварина вже має дім?</label>
                                 </div>
                             </div>
-                            <div class="col-6 text-center">
+                            <div class="col-6 text-center pet-avatar">
                                 <?php
                                     if ($pet->photo && is_file(public_path('uploads/' . $pet->photo))) {
                                         $path = $pet->photo;
@@ -182,7 +182,7 @@
                                         $path = 'images/nophoto.jpg';
                                     }
                                 ?>
-                                <img src="{{asset('/uploads') . '/' .  $path}}" alt="" id="avatar" style="width: 120px; height: 120px;" class="right">
+                                <img src="{{asset('/uploads') . '/' .  $path}}" alt="" id="avatar" class="right">
                             </div>
                         </div>
                     </div>

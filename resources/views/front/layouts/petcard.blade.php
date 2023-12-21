@@ -7,15 +7,15 @@
     }
     ?>
     <a href="{{route('single', $pet->id)}}" class="img-prod border-radius-15"><img class="img-fluid" src="{{$path}}" alt="Colorlib Template">
-        <span class="status" style="background: #8B4D93; min-width: 82px" @if(!$pet->special)hidden="" @endif>Особливий</span>
-        <span class="status" style="background: #DF4E0F; min-width: 82px" @if(!$pet->guardianship)hidden="" @endif>Під опікою</span>
+        <span class="status mw82 status-special" @if(!$pet->special)hidden="" @endif>Особливий</span>
+        <span class="status mw82 status-guardianship" @if(!$pet->guardianship)hidden="" @endif>Під опікою</span>
         <span class="status" @if(!$pet->adopted)hidden="" @endif>Вже має дім</span>
         <div class="overlay"></div>
     </a>
-    <div class="text py-3 pb-4 px-3 text-center border-radius-15" style="background: #e8ffff">
-        <h3><a href="{{route('single', $pet->id)}}" style="font-weight: 700">{{$pet->name}}</a></h3>
+    <div class="text py-3 pb-4 px-3 text-center border-radius-15 petcard-back">
+        <h3><a href="{{route('single', $pet->id)}}">{{$pet->name}}</a></h3>
         <div class="row">
-            <div class="col-6"><img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt="" style="width: 30px; height: auto"></div>
+            <div class="col-6 species-logo"><img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt=""></div>
             <div class="col-6"><span class="price-sale">{{$pet->sex}}</span></div>
         </div>
         <div class="row">

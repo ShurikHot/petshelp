@@ -77,6 +77,7 @@ class UserController extends Controller
                     return view('front.account', ['user' => $user, 'cust_title' => ' :: Аккаунт']);
             }
         }
+        return redirect()->route('login');
     }
 
     public function addFavorite($pet_id)

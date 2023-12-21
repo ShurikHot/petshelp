@@ -12,19 +12,13 @@
 
     <link rel="stylesheet" href="{{asset('assets/front/css/open-iconic-bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/animate.css')}}">
-
     <link rel="stylesheet" href="{{asset('assets/front/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/owl.theme.default.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/magnific-popup.css')}}">
-
     <link rel="stylesheet" href="{{asset('assets/front/css/aos.css')}}">
-
     <link rel="stylesheet" href="{{asset('assets/front/css/ionicons.min.css')}}">
-
     <link rel="stylesheet" href="{{asset('assets/front/css/bootstrap-datepicker.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/jquery.timepicker.css')}}">
-
-
     <link rel="stylesheet" href="{{asset('assets/front/css/flaticon.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/icomoon.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/style.css')}}">
@@ -53,8 +47,8 @@
     </div>
 </div>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container">
-        <img src="{{asset('assets/front/images/ph-logo3.png')}}" alt="" style="width: 50px; height: auto; margin-right: 10px; margin-bottom: 5px;">
+    <div class="container logo-img">
+        <img src="{{asset('assets/front/images/ph-logo3.png')}}" alt="">
         <a class="navbar-brand" href="{{route('home')}}">{{config('app.name')}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
@@ -74,8 +68,7 @@
                 <li class="nav-item"><a href="#" class="nav-link">Про нас</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Партнери</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Контакти</a></li>
-                <li class="nav-item"><a href="{{route('account', 'profile')}}" class="nav-link"><img src="{{asset('assets/front/images/user_b.png')}}" alt="" style="width: 12px; height: auto"></a></li>
-
+                <li class="nav-item"><a href="{{route('account', 'profile')}}" class="nav-link account-icon"><img src="{{asset('assets/front/images/user_b.png')}}" alt=""></a></li>
 
             </ul>
         </div>
@@ -104,7 +97,7 @@
     </div>
 </section>--}}
 
-<footer class="ftco-footer ftco-section" style="padding-bottom: 10px!important;">
+<footer class="ftco-footer ftco-section pbonly10">
     <div class="container">
         <div class="row">
             <div class="mouse">
@@ -115,9 +108,9 @@
         </div>
         <div class="row mb-5">
             <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
+                <div class="ftco-footer-widget mb-4 logo-footer">
 {{--                    <h2 class="ftco-heading-2">{{config('app.name')}}</h2>--}}
-                    <img src="{{asset('assets/front/images/ph-logo2.png')}}" alt="" style="width: 100%; height: auto">
+                    <img src="{{asset('assets/front/images/ph-logo2.png')}}" alt="">
                     <div class="d-flex justify-content-center">
                         <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                             <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
@@ -163,7 +156,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>
-                    All rights reserved &copy;<script>document.write(new Date().getFullYear());</script> <?= strtoupper(config('app.name') . '.com.ua') ?>
+                    All rights reserved &copy;<?= date('Y') ?> <?= strtoupper(config('app.name') . '.com.ua') ?>
                 </p>
             </div>
         </div>

@@ -72,8 +72,8 @@
                 </div>
                 <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
                     <div class="media block-6 services mb-md-0 mb-4">
-                        <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
-                            <img src="{{asset('assets/front/images/icon-pets-w.png')}}" alt="" style="width: 50%; height: auto">
+                        <div class="icon image-prod bg-color-2 d-flex justify-content-center align-items-center mb-2">
+                            <img src="{{asset('assets/front/images/icon-pets-w.png')}}" alt="">
 {{--                            <span class="flaticon-pet"></span>--}}
                         </div>
                         <div class="media-body">
@@ -84,8 +84,8 @@
                 </div>
                 <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
                     <div class="media block-6 services mb-md-0 mb-4">
-                        <div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
-                            <img src="{{asset('assets/front/images/icon-pets-love-w.png')}}" alt="" style="width: 70%; height: auto">
+                        <div class="icon index-icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
+                            <img src="{{asset('assets/front/images/icon-pets-love-w.png')}}" alt="">
                         </div>
                         <div class="media-body">
                             <h3 class="heading">Внесків від меценатів</h3>
@@ -199,7 +199,7 @@
                                 $path = asset('/uploads/') . '/' . 'images/nophoto.jpg';
                             }
                             ?>
-                        <a href="{{route('single', $pet->id)}}" class="img-prod"><img class="img-fluid" src="{{$path}}" alt="Colorlib Template" style="border-radius: 15px"></a>
+                        <a href="{{route('single', $pet->id)}}" class="img-prod"><img class="img-fluid border-radius-15" src="{{$path}}" alt="Colorlib Template"></a>
                     </div>
                     <div class="col-md-7 heading-section ftco-animate deal-of-the-day ftco-animate">
                         <span class="subheading">Можливо, сьогодні я знайду дім?..</span>

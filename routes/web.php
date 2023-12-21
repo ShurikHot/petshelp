@@ -16,6 +16,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 
     Route::resource('/users', 'UserController');
     Route::get('/users/{user}/lock', 'UserController@lock')->name('users.lock');
     Route::resource('/pets', 'PetController');
+    Route::get('/pets/{species}', 'PetController@show')->name('pets.species');
     Route::resource('/sliders', 'SliderController');
 });
 

@@ -163,7 +163,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{url('/')}}" target="_blank" class="brand-link">
-            <img src="{{asset('assets/admin/img/ph-logo3.png')}}" alt="PetsHelp Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="{{asset('assets/admin/img/ph-logo3.png')}}" alt="PetsHelp Logo" class="brand-image img-circle elevation-3">
             <span class="brand-text font-weight-light">PetsHelp</span>
         </a>
 
@@ -244,7 +244,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview">
+                    <li class="nav-item has-treeview <?php if(isset($species) && ($species == 'cat' || $species == 'dog' || $species == 'other')) echo 'menu-open' ?>">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-paw"></i>
                             <p>
@@ -260,19 +260,19 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{route('pets.species', 'cat')}}" class="nav-link <?php if(isset($species) && $species == 'cat') echo 'active'?>">
                                     <i class="fas fa-cat nav-icon"></i>
                                     <p>Коти</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{route('pets.species', 'dog')}}" class="nav-link <?php if(isset($species) && $species == 'dog') echo 'active'?>">
                                     <i class="fas fa-dog nav-icon"></i>
                                     <p>Собаки</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{route('pets.species', 'other')}}" class="nav-link <?php if(isset($species) && $species == 'other') echo 'active'?>">
                                     <i class="fas fa-dove nav-icon"></i>
                                     <p>Інші</p>
                                 </a>
@@ -298,7 +298,7 @@
             <div class="col-12">
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        <ul class="list-unstyled" style="margin-bottom: 0;">
+                        <ul class="list-unstyled list-mb0">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -322,7 +322,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 3.2.0
         </div>
-        <strong>Copyright &copy; 2014-<script>document.write(new Date().getFullYear());</script> <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014-<?= date('Y') ?> <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
 
     <!-- Control Sidebar -->

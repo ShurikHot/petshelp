@@ -89,11 +89,6 @@ class UserController extends Controller
         return redirect()->back(); // залишається на сторінці користувача
     }
 
-    public function lock(User $user)
-    {
-//        dd(__METHOD__);
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -106,4 +101,9 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Користувача видалено');
     }
+
+    /*public function lock(User $user)
+    {
+        dd(__METHOD__);
+    }*/
 }

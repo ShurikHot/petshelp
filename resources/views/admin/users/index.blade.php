@@ -17,29 +17,17 @@
 
             <!-- Default box -->
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Title</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
                 <div class="card-body" bis_skin_checked="1">
                     @if(count($users))
                         <table class="table table-bordered">
                             <thead>
                             <tr class="text-center">
-                                <th style="width: 10px">ID</th>
+                                <th class="w10">ID</th>
                                 <th>Ім'я</th>
                                 <th>E-mail</th>
                                 <th>Номер телефону</th>
-                                <th style="width: 120px">Улюбленці</th>
-                                <th style="width: 140px">Дії</th>
+                                <th class="w120">Улюбленці</th>
+                                <th class="w140">Дії</th>
                             </tr>
                             </thead>
 
@@ -60,7 +48,7 @@
                                         endforeach;
                                     ?>
                                     </td>
-                                    <th class="justify-content-center" style="display: flex">
+                                    <th class="justify-content-center d-flex">
                                         <a href="{{route('users.edit', $user->id)}}">
                                             <button><i class="fas fa-pencil-alt"></i></button>
                                         </a>

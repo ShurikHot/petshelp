@@ -15,14 +15,14 @@
                     ?>
                     <a href="{{$path}}" class="image-popup"><img class="img-fluid border-radius-15" src="{{$path}}" alt="Colorlib Template"></a>
     			</div>
-    			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                    <img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt="" style="width: 30px; height: auto">
+    			<div class="col-lg-6 product-details pl-md-5 ftco-animate species-logo">
+                    <img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt="">
                     @if($pet->adopted)
                         <span>Тварина вже має дім</span>
                     @elseif($pet->guardianship)
                         <span>Тварина під опікою</span>
                     @endif
-    				<h3>{{$pet->name}} <small style="color: grey">(id {{$pet->id}})</small></h3>
+    				<h3>{{$pet->name}} <small>(id {{$pet->id}})</small></h3>
                     <table class="table table-striped">
                         <tbody>
                             <tr>
@@ -108,32 +108,30 @@
                 </div>
             </div>
 
-
-
             @if($pet->story)
             <div class="row d-flex justify-content-around">
-                <div class="col-10 border-radius-15 mx-3 mb-4" style="background: #8B4D93; color: white">
+                <div class="col-10 border-radius-15 mx-3 mb-4 story-block">
                     <h5 class="text-center">Коротка історія тварини</h5>
-                        <p style="margin: 5px;">
-                            {{$pet->story}}
-                        </p>
+                    <p>
+                        {{$pet->story}}
+                    </p>
                 </div>
             </div>
             @endif
 
             <div class="row d-flex justify-content-around">
                 @if($pet->peculiarities)
-                <div class="col-5 border-radius-15 mx-3" style="background: #DF4E0F; color: white">
+                <div class="col-5 border-radius-15 mx-3 peculiarities-block">
                     <h5 class="text-center">Особливості поведінки тварини</h5>
-                    <p style="margin: 5px;">
+                    <p>
                         {{$pet->peculiarities}}
                     </p>
                 </div>
                 @endif
                 @if($pet->wishes)
-                <div class="col-5 border-radius-15 mx-3" style="background: #7ED2F7; color: white">
+                <div class="col-5 border-radius-15 mx-3 wishes-block">
                     <h5 class="text-center">Побажання щодо прилаштування</h5>
-                    <p style="margin: 5px;">
+                    <p>
                         {{$pet->wishes}}
                     </p>
                 </div>

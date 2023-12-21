@@ -54,12 +54,25 @@ class PetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show($species)
     {
-        //
+        switch ($species) {
+            case 'dog':
+                $pets = Pet::query()->where('species', '=', 'Собака')->paginate(5);
+                break;
+            case 'cat':
+                $pets = Pet::query()->where('species', '=', 'Кіт')->paginate(5);
+                break;
+            case 'other':
+                $pets = Pet::query()->whereNotIn('species', ['Кіт', 'Собака'])->paginate(5);
+                break;
+            default:
+                $pets = Pet::query()->paginate(5);
+                $species = '';
+        }
+        return view('admin.pets.index', compact('pets', 'species'));
     }
 
     /**
