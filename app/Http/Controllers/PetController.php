@@ -15,19 +15,20 @@ class PetController extends Controller
         $rating = Rating::ratingTable();
 
         $petsWithRating = Pet::query()->where('adopted', '=', '0')->whereIn('id', array_keys($rating))->paginate(8);
+        $count = count($petsWithRating);
 
-        if (count($petsWithRating) < 8) {
+        if ($count < 8) {
             try {
                 $addedFrontPets = Pet::query()
                     ->get()
                     ->where('adopted', '=', '0')
                     ->whereNotIn('id', array_keys($rating))
-                    ->random(8 - count($petsWithRating));
+                    ->random(8 - $count);
             } catch (InvalidArgumentException $e) {
                 $addedFrontPets = Pet::query()
                     ->where('adopted', '=', '0')
                     ->whereNotIn('id', array_keys($rating))
-                    ->paginate(8 - count($petsWithRating));
+                    ->paginate(8 - $count);
             }
             $frontPets = $petsWithRating->merge($addedFrontPets);
         } else {

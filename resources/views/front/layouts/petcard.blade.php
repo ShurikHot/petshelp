@@ -3,7 +3,7 @@
     if (isset($pet->photo)) {
         $path = asset('/uploads/') . '/' . $pet->photo;
     } else {
-        $path = asset('/uploads/') . '/' . 'images/nophoto.jpg';
+        $path = asset('/uploads/') . '/' . 'images/nophoto' . rand(1, 3) . '.jpg';
     }
     ?>
     <a href="{{route('single', $pet->id)}}" class="img-prod border-radius-15"><img class="img-fluid" src="{{$path}}" alt="Colorlib Template">

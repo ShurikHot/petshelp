@@ -10147,3 +10147,8 @@ textarea.form-control {
 .login-error {
     margin-bottom: 0!important;
 }
+
+.container .single-page {
+    font-size: 18px;
+    font-weight: 500;
+}

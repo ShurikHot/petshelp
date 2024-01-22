@@ -65,7 +65,7 @@ class UserController extends Controller
         return redirect()->route('login.create');
     }
 
-    public function account($item)
+    public static function account($item)
     {
         if (Auth::check()) {
             $user = Auth::user();
@@ -80,7 +80,7 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-    public function addFavorite($pet_id)
+    public static function addFavorite($pet_id)
     {
         $user = Auth::user();
         $fav = $user->pets->pluck('id')->toArray();
@@ -91,7 +91,7 @@ class UserController extends Controller
         }
     }
 
-    public function remFavorite($pet_id)
+    public static function remFavorite($pet_id)
     {
         $user = Auth::user();
         $fav = $user->pets->pluck('id')->toArray();

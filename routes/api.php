@@ -18,8 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResources([
-    'pets' => \App\Http\Controllers\Api\PetController::class,
-]);
+Route::apiResources(['pets' => \App\Http\Controllers\Api\PetController::class]);
 Route::get('count/all', [\App\Http\Controllers\Api\PetInfoController::class, 'countAll']);
 Route::get('count/adopted', [\App\Http\Controllers\Api\PetInfoController::class, 'countAdopted']);

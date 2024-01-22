@@ -61,13 +61,13 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Допомога</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="#">Опікунство</a>
-                        <a class="dropdown-item" href="#">Волонтерство</a>
+                        <a class="dropdown-item" href="{{route('guardianship')}}">Опікунство</a>
+                        <a class="dropdown-item" href="{{route('volunteer')}}">Волонтерство</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link">Про нас</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Партнери</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Контакти</a></li>
+                <li class="nav-item"><a href="{{route('about')}}" class="nav-link">Про нас</a></li>
+                <li class="nav-item"><a href="{{route('partners')}}" class="nav-link">Партнери</a></li>
+                <li class="nav-item"><a href="{{route('contacts')}}" class="nav-link">Контакти</a></li>
                 <li class="nav-item"><a href="{{route('account', 'profile')}}" class="nav-link account-icon"><img src="{{asset('assets/front/images/user_b.png')}}" alt=""></a></li>
 
             </ul>
@@ -125,8 +125,8 @@
 {{--                    <h2 class="ftco-heading-2">Menu</h2>--}}
                     <ul class="list-unstyled">
                         <li><a href="{{route('pets', 'all')}}" class="py-2 d-block">Знайти друга</a></li>
-                        <li><a href="#" class="py-2 d-block">Опікунство</a></li>
-                        <li><a href="#" class="py-2 d-block">Волонтерство</a></li>
+                        <li><a href="{{route('guardianship')}}" class="py-2 d-block">Опікунство</a></li>
+                        <li><a href="{{route('volunteer')}}" class="py-2 d-block">Волонтерство</a></li>
                     </ul>
                 </div>
             </div>
@@ -134,9 +134,9 @@
                 <div class="ftco-footer-widget mb-4">
 {{--                    <h2 class="ftco-heading-2">Help</h2>--}}
                     <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
-                        <li><a href="#" class="py-2 d-block">Про нас</a></li>
-                        <li><a href="#" class="py-2 d-block">Партнери</a></li>
-                        <li><a href="#" class="py-2 d-block">Контакти</a></li>
+                        <li><a href="{{route('about')}}" class="py-2 d-block">Про нас</a></li>
+                        <li><a href="{{route('partners')}}" class="py-2 d-block">Партнери</a></li>
+                        <li><a href="{{route('contacts')}}" class="py-2 d-block">Контакти</a></li>
                     </ul>
                 </div>
             </div>

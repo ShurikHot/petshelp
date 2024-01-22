@@ -13,7 +13,7 @@ class TestApiController extends Controller
     {
         $options = [
             'appid' => '32ed0ce742d8712b8a77fd47642813aa',
-            'q' => 'Madrid',
+            'q' => 'Kyiv',
             'lang' => 'ua',
             'units' => 'metric',
         ];

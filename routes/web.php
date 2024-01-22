@@ -9,6 +9,11 @@ Route::get('/pets/{species}', 'App\Http\Controllers\PetController@show')->name('
 Route::post('/pets/{id}/favorite', 'App\Http\Controllers\UserController@addFavorite')->name('addFavorite')->where(['id' => '[0-9]+']);
 Route::post('/pets/{id}/remove', 'App\Http\Controllers\UserController@remFavorite')->name('remFavorite')->where(['id' => '[0-9]+']);
 Route::any('/account/{item}', 'App\Http\Controllers\UserController@account')->name('account');
+Route::view('/guardianship', 'front.pages.guardianship', ['cust_title' => ' :: Опікунство'])->name('guardianship');
+Route::view('/volunteer', 'front.pages.volunteer', ['cust_title' => ' :: Волонтерство'])->name('volunteer');
+Route::view('/about', 'front.pages.about', ['cust_title' => ' :: Про нас'])->name('about');
+Route::view('/partners', 'front.pages.partners', ['cust_title' => ' :: Партнери'])->name('partners');
+Route::view('/contacts', 'front.pages.contacts', ['cust_title' => ' :: Контакти'])->name('contacts');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'MainController@index')->name('admin.index');
