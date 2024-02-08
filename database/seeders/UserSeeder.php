@@ -16,6 +16,8 @@ class UserSeeder extends Seeder
     {
         User::factory(20)->create();
         $issetAdmin = User::query()->where('email', 'admin@admin.com')->exists();
-        if (!$issetAdmin) User::factory()->adminAccount()->create();
+        if (!$issetAdmin) {
+            User::factory()->adminAccount()->create();
+        }
     }
 }

@@ -21,7 +21,7 @@ class AdminMiddleware
             return $next($request);
         } else {
 //            abort(404);
-          return redirect()->route('login.create');
+            return redirect()->route('login.create');
         }
     }
 }

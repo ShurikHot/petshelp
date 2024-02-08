@@ -55,17 +55,6 @@ class SliderController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -95,7 +84,9 @@ class SliderController extends Controller
 
         $data = $request->all();
         $data['photo'] = Slider::uploadSlider($data);
-        if ($slider->photo && !str_starts_with($data['base64image'], 'front')) Storage::delete($slider->photo);
+        if ($slider->photo && !str_starts_with($data['base64image'], 'front')) {
+            Storage::delete($slider->photo);
+        }
 
         $slider->update($data);
         $request->session()->flash('success', 'Інформація оновлена');
@@ -110,7 +101,9 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        if ($slider->photo) Storage::delete($slider->photo);
+        if ($slider->photo) {
+            Storage::delete($slider->photo);
+        }
         $slider->delete();
         return redirect()->route('sliders.index')->with('success', 'Слайд видалено');
     }

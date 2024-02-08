@@ -20,7 +20,7 @@
                 <div class="row" bis_skin_checked="1">
                     <div class="col-sm-1" bis_skin_checked="1">
                         <div class="form-group" bis_skin_checked="1">
-                            <label for="name">ID</label>
+                            <label for="id">ID</label>
                             <input type="text" class="form-control text-center" id="id" name="id" value="{{$pet->id}}" disabled>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-sm-3" bis_skin_checked="1">
                         <div class="form-group" bis_skin_checked="1">
-                            <label for="species">Стать тварини*</label>
+                            <label for="sex">Стать тварини*</label>
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex">
                                 <option @if($pet->sex == "Самець") selected @endif>Самець</option>
                                 <option @if($pet->sex == "Самиця") selected @endif>Самиця</option>
@@ -202,7 +202,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="img-container">
-                            <img id="uploadedAvatar" src="https://avatars0.githubusercontent.com/u/3456749">
+                            <img id="uploadedAvatar" src="https://avatars0.githubusercontent.com/u/3456749" alt="">
                         </div>
                     </div>
                     <div class="modal-footer">

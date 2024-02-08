@@ -27,7 +27,7 @@
                 <div class="row" bis_skin_checked="1">
                     <div class="col-sm-12" bis_skin_checked="1">
                         <div class="form-group" bis_skin_checked="1">
-                            <label for="name">Заголовок</label>
+                            <label for="title">Заголовок</label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="Введідь заголовок слайда" value="{{old('title')}}">
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                 <div class="row" bis_skin_checked="1">
                     <div class="col-sm-12" bis_skin_checked="1">
                         <div class="form-group" bis_skin_checked="1">
-                            <label for="name">Слоган</label>
+                            <label for="tagline">Слоган</label>
                             <input type="text" class="form-control" id="tagline" name="tagline" placeholder="Введідь слоган слайда" value="{{old('tagline')}}">
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="img-container">
-                            <img id="uploadedAvatar" src="https://avatars0.githubusercontent.com/u/3456749">
+                            <img id="uploadedAvatar" src="https://avatars0.githubusercontent.com/u/3456749" alt="">
                         </div>
                     </div>
                     <div class="modal-footer">

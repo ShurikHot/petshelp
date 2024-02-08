@@ -103,7 +103,9 @@ class PetController extends Controller
         $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);
 
-        if ($pet->photo && !str_starts_with($data['base64image'], 'images')) Storage::delete($pet->photo);
+        if ($pet->photo && !str_starts_with($data['base64image'], 'images')) {
+            Storage::delete($pet->photo);
+        }
         $pet->update($data);
         $request->session()->flash('success', 'Інформація оновлена');
 //        return redirect()->route('pets.index'); // редирект на першу сторінку
@@ -118,7 +120,9 @@ class PetController extends Controller
      */
     public function destroy(Pet $pet)
     {
-        if ($pet->photo) Storage::delete($pet->photo);
+        if ($pet->photo) {
+            Storage::delete($pet->photo);
+        }
         $pet->delete();
         return redirect()->route('pets.index')->with('success', 'Тварину видалено');
     }

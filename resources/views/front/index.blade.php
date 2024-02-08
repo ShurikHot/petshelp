@@ -187,6 +187,7 @@
         </div>
     </section>
 
+    <section>
         @if(isset($randomPet))
             @foreach($randomPet as $pet)
             <div class="container">
@@ -214,7 +215,6 @@
             </div>
             @endforeach
         @endif
-
     </section>
 
     <section class="ftco-section testimony-section">

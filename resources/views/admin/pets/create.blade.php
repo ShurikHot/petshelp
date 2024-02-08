@@ -27,7 +27,6 @@
                         <div class="form-group" bis_skin_checked="1">
                             <label for="species">Вид тварини*</label>
                             <select class="form-control @error('species') is-invalid @enderror" id="species" name="species">
-{{--                                <option selected disabled>Оберіть вид</option>--}}
                                 <option @if(old('species') == "Собака") selected @endif>Собака</option>
                                 <option @if(old('species') == "Кіт") selected @endif>Кіт</option>
                                 <option @if(old('species') == "Гризун") selected @endif>Гризун</option>
@@ -40,7 +39,6 @@
                         <div class="form-group" bis_skin_checked="1">
                             <label for="species">Стать тварини*</label>
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex">
-{{--                                <option selected disabled>Оберіть стать</option>--}}
                                 <option @if(old('sex') == "Самець") selected @endif>Самець</option>
                                 <option @if(old('sex') == "Самиця") selected @endif>Самиця</option>
                             </select>

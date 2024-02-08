@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class PatronController extends Controller
 {
@@ -11,6 +10,4 @@ class PatronController extends Controller
     {
         return view('admin.users.patrons');
     }
-
-
 }

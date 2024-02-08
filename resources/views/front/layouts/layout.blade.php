@@ -109,7 +109,6 @@
         <div class="row mb-5">
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4 logo-footer">
-{{--                    <h2 class="ftco-heading-2">{{config('app.name')}}</h2>--}}
                     <img src="{{asset('assets/front/images/ph-logo2.png')}}" alt="">
                     <div class="d-flex justify-content-center">
                         <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
@@ -122,7 +121,6 @@
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4 ml-md-5">
-{{--                    <h2 class="ftco-heading-2">Menu</h2>--}}
                     <ul class="list-unstyled">
                         <li><a href="{{route('pets', 'all')}}" class="py-2 d-block">Знайти друга</a></li>
                         <li><a href="{{route('guardianship')}}" class="py-2 d-block">Опікунство</a></li>
@@ -132,7 +130,6 @@
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
-{{--                    <h2 class="ftco-heading-2">Help</h2>--}}
                     <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
                         <li><a href="{{route('about')}}" class="py-2 d-block">Про нас</a></li>
                         <li><a href="{{route('partners')}}" class="py-2 d-block">Партнери</a></li>

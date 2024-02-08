@@ -45,10 +45,12 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt([
+        if (
+            Auth::attempt([
             'email' => $request->email,
             'password' => $request->password,
-        ])) {
+            ])
+        ) {
             session()->flash('success', 'Ви успішно авторизовані');
             if (Auth::user()->is_admin) {
                 return redirect()->route('admin.index');

@@ -20,7 +20,7 @@
                 <div class="row" bis_skin_checked="1">
                     <div class="col-sm-1" bis_skin_checked="1">
                         <div class="form-group" bis_skin_checked="1">
-                            <label for="name">ID</label>
+                            <label for="id">ID</label>
                             <input type="text" class="form-control text-center" id="id" name="id" value="{{$user->id}}" disabled>
                         </div>
                     </div>

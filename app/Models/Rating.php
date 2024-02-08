@@ -24,7 +24,7 @@ class Rating extends Model
         $petRating = self::query()->where('pet_id', $id)->get();
         $rating = $petRating->pluck('rating')->toArray();
         if (!empty($rating)) {
-            self::query()->where('pet_id', $id)->update(['rating' => $rating[0]+1]);
+            self::query()->where('pet_id', $id)->update(['rating' => $rating[0] + 1]);
         } else {
             self::query()->create(['pet_id' => $id, 'rating' => 1]);
         }

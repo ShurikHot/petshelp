@@ -76,7 +76,7 @@ class Pet extends Model
         $years = self::plural($forms_y, $y);
         $month = self::plural($forms_m, $m);
 
-        return ($y != 0 ? ($y . ' ' . $years . ' ') : '') . ($y != 0 && $m != 0 ? ' і ' : '') . ($m != 0 ? ($m . ' ' . $month) : '');
+        return ($y != 0 ? "$y $years " : '') . ($y != 0 && $m != 0 ? ' і ' : '') . ($m != 0 ? "$m $month" : '');
     }
 
     public static function plural($forms, $num)
@@ -114,5 +114,4 @@ class Pet extends Model
         }
         return $request;
     }
-
 }

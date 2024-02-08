@@ -460,7 +460,6 @@
                         done(reader.result);
                     };
                     reader.readAsDataURL(file);
-                    // }
                 }
             });
 
