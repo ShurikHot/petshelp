@@ -47,8 +47,8 @@ class UserController extends Controller
 
         if (
             Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password,
+                'email' => $request->email,
+                'password' => $request->password,
             ])
         ) {
             session()->flash('success', 'Ви успішно авторизовані');
