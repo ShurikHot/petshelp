@@ -10,23 +10,31 @@ use InvalidArgumentException;
 
 class PetController extends Controller
 {
+    public const FILTEREBLE = [
+        'sex',
+        'sterilization',
+        'vaccination',
+        'special',
+        'guardianship',
+    ];
+
     public function index()
     {
         $rating = Rating::ratingTable();
 
-        $petsWithRating = Pet::query()->where('adopted', '=', '0')->whereIn('id', array_keys($rating))->paginate(8);
+        $petsWithRating = Pet::query()->notAdopted()->whereIn('id', array_keys($rating))->paginate(8);
         $count = count($petsWithRating);
 
         if ($count < 8) {
             try {
                 $addedFrontPets = Pet::query()
+                    ->notAdopted()
                     ->get()
-                    ->where('adopted', '=', '0')
                     ->whereNotIn('id', array_keys($rating))
                     ->random(8 - $count);
             } catch (InvalidArgumentException $e) {
                 $addedFrontPets = Pet::query()
-                    ->where('adopted', '=', '0')
+                    ->notAdopted()
                     ->whereNotIn('id', array_keys($rating))
                     ->paginate(8 - $count);
             }
@@ -36,9 +44,9 @@ class PetController extends Controller
         }
 
         try {
-            $randomPet = Pet::query()->get()->where('adopted', '=', '0')->random(1);
+            $randomPet = Pet::query()->notAdopted()->get()->random(1);
         } catch (InvalidArgumentException $e) {
-            $randomPet = Pet::query()->where('adopted', '=', '0')->paginate(1);
+            $randomPet = Pet::query()->notAdopted()->paginate(1);
         }
 
         $already = Pet::query()->get()->where('adopted', '=', '1')->count();
@@ -50,25 +58,36 @@ class PetController extends Controller
     public function show($species)
     {
         $cust_title = ' :: Пошук друга';
-        switch ($species) {
-            case 'all':
-                $pets = Pet::query()->where('adopted', '=', '0')->paginate(12);
-                break;
-            case 'dog':
-                $pets = Pet::query()->where('species', '=', 'Собака')->where('adopted', '=', '0')->paginate(12);
-                break;
-            case 'cat':
-                $pets = Pet::query()->where('species', '=', 'Кіт')->where('adopted', '=', '0')->paginate(12);
-                break;
-            case 'rodent':
-                $pets = Pet::query()->where('species', '=', 'Гризун')->where('adopted', '=', '0')->paginate(12);
-                break;
-            case 'bird':
-                $pets = Pet::query()->where('species', '=', 'Пташка')->where('adopted', '=', '0')->paginate(12);
-                break;
-            default:
-                $pets = Pet::query()->where('adopted', '=', '0')->paginate(12);
-                $species = '';
+        $searchQuery = $_REQUEST['search'] ?? '';
+        $filters = self::getFilters();
+
+        if ($searchQuery) {
+            $pets = Pet::search($searchQuery)->paginate(12);
+        } else {
+            $pets = Pet::query();
+            if ($filters) {
+                foreach ($filters as $key => $value) {
+                    $pets->where($key, $value);
+                }
+            }
+
+            switch ($species) {
+                case 'dog':
+                    $pets->where('species', '=', 'Собака');
+                    break;
+                case 'cat':
+                    $pets->where('species', '=', 'Кіт');
+                    break;
+                case 'rodent':
+                    $pets->where('species', '=', 'Гризун');
+                    break;
+                case 'bird':
+                    $pets->where('species', '=', 'Пташка');
+                    break;
+                default:
+                    $species = '';
+            }
+            $pets = $pets->notAdopted()->paginate(12);
         }
         return view('front.pets', compact('pets', 'species', 'cust_title'));
     }
@@ -87,13 +106,18 @@ class PetController extends Controller
         }
 
         try {
-            $related = Pet::query()->where('species', '=', $pet->species)->where('adopted', '=', '0')->get()->random(4);
+            $related = Pet::query()->where('species', '=', $pet->species)->notAdopted()->get()->random(4);
         } catch (InvalidArgumentException $e) {
-            $related = Pet::query()->where('species', '=', $pet->species)->where('adopted', '=', '0')->paginate(4);
+            $related = Pet::query()->where('species', '=', $pet->species)->notAdopted()->paginate(4);
         }
 
         Rating::upRating($id);
 
         return view('front.single', compact('pet', 'related', 'is_fav', 'cust_title'));
+    }
+
+    public static function getFilters()
+    {
+        return array_intersect_key($_REQUEST, array_flip(self::FILTEREBLE));
     }
 }

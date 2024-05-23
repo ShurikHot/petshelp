@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone_number', 13)->nullable();
+            $table->boolean('subscribe')->default(0);
             $table->boolean('is_admin')->nullable()->default(0);
             $table->timestamps();
         });

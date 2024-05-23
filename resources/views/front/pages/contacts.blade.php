@@ -13,7 +13,7 @@
             +380987654321
         </p>
         <p class="single-page">
-            info@<?= strtolower(config('app.name')) ?>.com.ua
+            <?= strtolower(env('MAIL_FROM_ADDRESS')) ?>
         </p>
     </div>
 </section>

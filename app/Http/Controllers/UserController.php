@@ -102,4 +102,12 @@ class UserController extends Controller
         $user->pets()->sync($fav);
         return response()->json(['message' => 'success']);
     }
+
+    public static function subscribe()
+    {
+        $user = Auth::user();
+        $user->subscribe = 1;
+        $user->save();
+        return response()->json(['message' => 'success']);
+    }
 }

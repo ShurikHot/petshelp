@@ -25,60 +25,12 @@
 
 </head>
 <body class="goto-here">
-<div class="py-1 bg-primary">
-    <div class="container">
-        <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-            <div class="col-lg-12 d-block">
-                <div class="row d-flex">
-                    <div class="col-md pr-4 d-flex topper align-items-center">
-                        <div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-                        <span class="text">+380987654321</span>
-                    </div>
-                    <div class="col-md pr-4 d-flex topper align-items-center">
-                        <div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
-                        <span class="text">info@<?= strtolower(config('app.name')) ?>.com.ua</span>
-                    </div>
-                    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
-                        <span class="text">Ресурс для допомоги безпритульним тваринам</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container logo-img">
-        <img src="{{asset('assets/front/images/ph-logo3.png')}}" alt="">
-        <a class="navbar-brand" href="{{route('home')}}">{{config('app.name')}}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="oi oi-menu"></span> Menu
-        </button>
 
-        <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="{{route('home')}}" class="nav-link">Головна</a></li>
-                <li class="nav-item active"><a href="{{route('pets', 'all')}}" class="nav-link">Знайти друга</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Допомога</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="{{route('guardianship')}}">Опікунство</a>
-                        <a class="dropdown-item" href="{{route('volunteer')}}">Волонтерство</a>
-                    </div>
-                </li>
-                <li class="nav-item"><a href="{{route('about')}}" class="nav-link">Про нас</a></li>
-                <li class="nav-item"><a href="{{route('partners')}}" class="nav-link">Партнери</a></li>
-                <li class="nav-item"><a href="{{route('contacts')}}" class="nav-link">Контакти</a></li>
-                <li class="nav-item"><a href="{{route('account', 'profile')}}" class="nav-link account-icon"><img src="{{asset('assets/front/images/user_b.png')}}" alt=""></a></li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- END nav -->
+@include('front.layouts.header')
 
 @yield('content')
 
-{{--<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
     <div class="container py-4">
         <div class="row d-flex justify-content-center py-5">
             <div class="col-md-6">
@@ -86,16 +38,22 @@
                 <span>Отримуйте інформацію про наші справи та події, звіти нашої роботи та плани на майбутнє</span>
             </div>
             <div class="col-md-6 d-flex align-items-center">
-                <form action="#" class="subscribe-form">
+                <form class="subscribe-form">
                     <div class="form-group d-flex">
-                        <input type="text" class="form-control" placeholder="Введіть email адресу">
-                        <input type="submit" value="Підписатися" class="submit px-3">
+                        @if(auth()->user())
+                            <input type="text" class="form-control" placeholder="" value="{{auth()->user()->email ?? ''}}" disabled>
+                            <input type="submit" id="subscribe" value="{{auth()->user()->subscribe ? 'Ви підписані!' : 'Підписатися'}}" class="submit px-3"
+                                {{auth()->user()->subscribe ? 'disabled' : ''}}>
+                        @else
+                            <input type="text" class="form-control" id="subscribe" placeholder="Зареєструйтеся або авторизуйтеся для оформлення підписки" disabled>
+                            <a href="{{route('register.create')}}" class="submit px-3 align-content-center">Реєстрація</a>
+                        @endif
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</section>--}}
+</section>
 
 <footer class="ftco-footer ftco-section pbonly10">
     <div class="container">
@@ -144,7 +102,7 @@
                         <ul>
                             <li><span class="icon icon-map-marker"></span><span class="text">просп.Грушевського, 1, м.Кам'янець-Подільський, Хмельницька обл., Україна</span></li>
                             <li><a href="#"><span class="icon icon-phone"></span><span class="text">+380987654321</span></a></li>
-                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@<?= strtolower(config('app.name')) ?>.com.ua</span></a></li>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text"><?= strtolower(env('MAIL_FROM_ADDRESS')) ?></span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -153,7 +111,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>
-                    All rights reserved &copy;<?= date('Y') ?> <?= strtoupper(config('app.name') . '.com.ua') ?>
+                    All rights reserved &copy;<?= date('Y') ?> <?= strtoupper(env('MAIL_FROM_ADDRESS') ?>) ?>
                 </p>
             </div>
         </div>
@@ -177,7 +135,6 @@
 <script src="{{asset('assets/front/js/bootstrap-datepicker.j')}}s"></script>
 <script src="{{asset('assets/front/js/scrollax.min.js')}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-{{--<script src="{{asset('assets/front/js/google-map.js')}}"></script>--}}
 <script src="{{asset('assets/front/js/main.js')}}"></script>
 
 </body>

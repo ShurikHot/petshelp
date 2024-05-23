@@ -26,6 +26,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 
     Route::resource('/pets', 'PetController');
     Route::get('/pets/{species}', 'PetController@show')->name('pets.species');
     Route::resource('/sliders', 'SliderController');
+    Route::get('/news', 'NewsController@index')->name('news.index');
+    Route::post('/sendnews', 'NewsController@send')->name('news.send');
 });
 
 Route::group(['middleware' => 'guest', 'namespace' => 'App\Http\Controllers'], function () {
@@ -34,7 +36,9 @@ Route::group(['middleware' => 'guest', 'namespace' => 'App\Http\Controllers'], f
     Route::get('login', 'UserController@loginForm')->name('login.create');
     Route::post('login', 'UserController@login')->name('login');
 });
+
 Route::get('logout', 'App\Http\Controllers\UserController@logout')->name('logout')->middleware('auth');
+Route::post('subscribe', 'App\Http\Controllers\UserController@subscribe')->name('subscribe')->middleware('auth');
 
 /* API-practice */
 Route::post('/weather', 'App\Http\Controllers\Api\TestApiController@weatherApi');

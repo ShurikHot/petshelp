@@ -10152,3 +10152,11 @@ textarea.form-control {
     font-size: 18px;
     font-weight: 500;
 }
+
+#search::placeholder, #subscribe::placeholder {
+    color: #a69f9f !important;
+}
+
+.hidden {
+    display: none;
+}

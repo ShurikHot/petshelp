@@ -408,7 +408,23 @@
         })
     })
 
-    //Модальне для опікунства допомоги на сторінці тварини
+    // Оформлення підписки
+    $('#subscribe').on('click', function () {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/subscribe',
+            type: 'POST',
+            success: function(response) {
+                $('#subscribe').text('Ви підписані!');
+            },
+            error: function(xhr, status, error) {
+            }
+        })
+    })
+
+    //Модальне для опікунства/допомоги на сторінці тварини
     $('.give-home').on('click', function (){
         $('#modal-home').modal('show');
     })
@@ -417,5 +433,24 @@
         $('#modal-money').modal('show');
     })
 
+    //Додаткові фільтри приховати/показати
+    $(document).ready(function(){
+        $('#filter-link').click(function(e){
+            e.preventDefault();
+            var block = $('#filter-block');
+            if (block.hasClass('hidden')) {
+                block.fadeIn('slow').removeClass('hidden');
+                $('#filter-link').text('Приховати додаткові фільтри')
+            } else {
+                block.fadeOut('slow', function(){
+                    $(this).addClass('hidden');
+                });
+                $('#filter-link').text('Показати додаткові фільтри')
+            }
+        });
+    });
+
 })(jQuery);
+
+
 

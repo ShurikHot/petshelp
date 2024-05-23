@@ -11,8 +11,16 @@
     <link rel="stylesheet" href="{{asset('assets/admin/plugins/fontawesome-free/css/all.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets/admin/css/adminlte.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{asset('assets/front/css/style.css')}}">
 
 <body class="hold-transition register-page">
+
+@include('front.layouts.header')
+
 <div class="register-box">
     <div class="card">
         <div class="card-body register-card-body">
@@ -66,7 +74,6 @@
 
     </div>
 </div>
-
 
 <!-- jQuery -->
 <script src="{{asset('assets/admin/plugins/jquery/jquery.js')}}"></script>

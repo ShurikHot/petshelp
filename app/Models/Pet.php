@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Http\Requests\Pet\StoreRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Pet extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -113,5 +116,30 @@ class Pet extends Model
             $request[$param] = isset($request[$param]);
         }
         return $request;
+    }
+
+    public function scopeNotAdopted(Builder $query)
+    {
+        $query->where('adopted', '=', '0');
+    }
+
+    public function searchableAs()
+    {
+        return 'pet_index';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'species' => $this->species,
+            'breed' => $this->breed,
+            'city' => $this->city,
+            'sex' => $this->sex,
+            'sterilization' => $this->sterilization,
+            'vaccination' => $this->vaccination,
+            'special' => $this->special,
+            'guardianship' => $this->guardianship,
+        ];
     }
 }

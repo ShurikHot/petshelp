@@ -14,6 +14,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
+        'subscribe',
     ];
 
     public function pets()
