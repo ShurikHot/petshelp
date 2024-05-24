@@ -37,8 +37,10 @@ Route::group(['middleware' => 'guest', 'namespace' => 'App\Http\Controllers'], f
     Route::post('login', 'UserController@login')->name('login');
 });
 
-Route::get('logout', 'App\Http\Controllers\UserController@logout')->name('logout')->middleware('auth');
-Route::post('subscribe', 'App\Http\Controllers\UserController@subscribe')->name('subscribe')->middleware('auth');
+Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function () {
+    Route::get('logout', 'UserController@logout')->name('logout');
+    Route::post('subscribe', 'UserController@subscribe')->name('subscribe');
+});
 
 /* API-practice */
 Route::post('/weather', 'App\Http\Controllers\Api\TestApiController@weatherApi');

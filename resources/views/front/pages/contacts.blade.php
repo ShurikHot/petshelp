@@ -13,7 +13,7 @@
             +380987654321
         </p>
         <p class="single-page">
-            <?= strtolower(env('MAIL_FROM_ADDRESS')) ?>
+            <?= strtolower(config('mail.from.address')) ?>
         </p>
     </div>
 </section>

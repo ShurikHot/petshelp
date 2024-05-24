@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UpRaitingJob;
 use App\Models\Pet;
 use App\Models\Rating;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use InvalidArgumentException;
 
 class PetController extends Controller
@@ -20,9 +22,14 @@ class PetController extends Controller
 
     public function index()
     {
-        $rating = Rating::ratingTable();
+        $rating = Cache::remember('rating', 1800, function () {
+            return Rating::ratingTable();
+        });
 
-        $petsWithRating = Pet::query()->notAdopted()->whereIn('id', array_keys($rating))->paginate(8);
+        $petsWithRating = Cache::remember('petsWithRating', 1800, function () use ($rating) {
+            return Pet::query()->notAdopted()->whereIn('id', array_keys($rating))->paginate(8);
+        });
+
         $count = count($petsWithRating);
 
         if ($count < 8) {
@@ -49,8 +56,18 @@ class PetController extends Controller
             $randomPet = Pet::query()->notAdopted()->paginate(1);
         }
 
-        $already = Pet::query()->get()->where('adopted', '=', '1')->count();
-        $sliders = Slider::query()->where('is_active', '=', '1')->get();
+        $already = Cache::remember('already', 86400, function () {
+            return Pet::query()->get()->where('adopted', '=', '1')->count();
+        });
+
+        $slidersJson = Cache::get('sliders');
+        if ($slidersJson) {
+            $slidersArray = json_decode($slidersJson, true);
+            $sliders = Slider::hydrate($slidersArray);
+        } else {
+            $sliders = Slider::query()->where('is_active', 1)->get();
+            Cache::put('sliders', $sliders->toJson(), 3600);
+        }
 
         return view('front.index', compact('frontPets', 'randomPet', 'already', 'sliders'));
     }

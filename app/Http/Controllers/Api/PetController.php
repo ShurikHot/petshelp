@@ -30,7 +30,7 @@ class PetController extends Controller
     {
         $request->validated();
 
-        Pet::boolParams($request);
+        Pet::petParams($request);
 
         $data = $request->all();
         $pet = Pet::query()->create($data);
@@ -61,7 +61,7 @@ class PetController extends Controller
     {
         $request->validated();
 
-        Pet::boolParams($request);
+        Pet::petParams($request);
 
         $data = $request->all();
 

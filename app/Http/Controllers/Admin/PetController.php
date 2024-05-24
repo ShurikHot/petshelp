@@ -41,7 +41,7 @@ class PetController extends Controller
     public function store(StoreRequest $request)
     {
         $request->validated();
-        Pet::boolParams($request);
+        Pet::petParams($request);
 
         $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);
@@ -98,7 +98,7 @@ class PetController extends Controller
     {
         $request->validated();
 
-        $pet->boolParams($request);
+        $pet->petParams($request);
 
         $data = $request->all();
         $data['photo'] = Pet::uploadPhoto($data);

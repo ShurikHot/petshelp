@@ -13,6 +13,10 @@ class Pet extends Model
     use HasFactory;
     use Searchable;
 
+    protected const PETPARAMS = [
+        'sterilization', 'vaccination', 'special', 'guardianship', 'adopted'
+    ];
+
     protected $fillable = [
         'name',
         'age_month',
@@ -109,10 +113,9 @@ class Pet extends Model
         return asset("assets/front/images/icon-{$spec}.png");
     }
 
-    public static function boolParams(StoreRequest $request)
+    public static function petParams(StoreRequest $request)
     {
-        $bool_params = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
-        foreach ($bool_params as $param) {
+        foreach (self::PETPARAMS as $param) {
             $request[$param] = isset($request[$param]);
         }
         return $request;
