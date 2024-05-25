@@ -27,14 +27,14 @@
 {{--                    Головна сторінка адмінки--}}
                     <div class="weather-widget"></div>
 
-                    <div class="spotify">
+                    {{--<div class="spotify">
                         Spotify API
                         <input type="text" id="artist" name="artist" placeholder="Введіть ID артиста">
                         <button type="submit" id="find-button">Знайти</button>
                         <br>
                         наприклад, 0k17h0D3J5VfsdmQ1iZtE9
                         <div class="artist-info"></div>
-                    </div>
+                    </div>--}}
 
                 </div>
                 <!-- /.card-body -->

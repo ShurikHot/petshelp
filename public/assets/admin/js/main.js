@@ -43,7 +43,7 @@
     }
 
     //АРІ сервісу музики (тренування)
-    const spotifyBl = document.querySelector('.artist-info')
+    /*const spotifyBl = document.querySelector('.artist-info')
 
     $('#find-button').on('click', function () {
         artist_id = $('#artist').val();
@@ -68,7 +68,7 @@
             })
         }
         $('#artist').val('');
-    })
+    })*/
 
 
 })(jQuery);

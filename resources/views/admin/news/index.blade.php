@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Новина:</h1>
+                    <h1>Новини:</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -17,7 +17,7 @@
         <form action="{{route('news.send')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row" bis_skin_checked="1">
-                <div class="col-sm-6" bis_skin_checked="1">
+                <div class="col-sm-12" bis_skin_checked="1">
                     <div class="form-group" bis_skin_checked="1">
                         <label>Текст новини</label>
                         <textarea class="form-control" rows="1" placeholder="Текст новини ..." id="news" name="news"></textarea>
