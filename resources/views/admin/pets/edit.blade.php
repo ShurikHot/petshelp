@@ -46,8 +46,8 @@
                         <div class="form-group" bis_skin_checked="1">
                             <label for="sex">Стать тварини*</label>
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex">
-                                <option @if($pet->sex == "Самець") selected @endif>Самець</option>
-                                <option @if($pet->sex == "Самиця") selected @endif>Самиця</option>
+                                <option @if($pet->sex == "male") selected @endif value="male">Самець</option>
+                                <option @if($pet->sex == "female") selected @endif value="female">Самиця</option>
                             </select>
                         </div>
                     </div>

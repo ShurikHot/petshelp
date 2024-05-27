@@ -15,12 +15,12 @@
     <div class="text py-3 pb-4 px-3 text-center border-radius-15 petcard-back">
         <h3><a href="{{route('single', $pet->id)}}">{{$pet->name}}</a></h3>
         <div class="row">
-            <div class="col-6 species-logo"><img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt=""></div>
-            <div class="col-6"><span class="price-sale">{{$pet->sex}}</span></div>
+            <div class="col-6 species-logo"><img src="{{$pet->speciesPicture}}" alt=""></div>
+            <div class="col-6"><span class="price-sale">{{$pet->genderTitle}}</span></div>
         </div>
         <div class="row">
             <div class="col-12">
-                <p class="price"><span class="price-sale">вік {{\App\Models\Pet::agePet($pet->age_month)}}</span></p>
+                <p class="price"><span class="price-sale">вік {{$pet->ageYearMonth}}</span></p>
             </div>
             <div class="col-12 pricing">
                 м. {{$pet->city}}

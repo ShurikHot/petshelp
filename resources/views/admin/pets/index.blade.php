@@ -55,7 +55,7 @@
                                     <td class="text-center">{{$pet->id}}</td>
                                     <td>{{$pet->name}}</td>
                                     <td>{{$pet->species}}</td>
-                                    <td>{{$pet->sex}}</td>
+                                    <td>{{$pet->genderTitle}}</td>
                                     <td>{{$pet->age_month}}</td>
                                     <td>{{$pet->breed}}</td>
                                     <td>{{$pet->patrons}}</td>

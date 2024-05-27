@@ -78,7 +78,7 @@
                         </div>
                         <div class="media-body">
                             <h3 class="heading">Знайшли дім</h3>
-                            <span>{{$already}} {{\App\Models\Pet::plural(['хвостик', 'хвостика', 'хвостиків'], $already)}}</span>
+                            <span>{{$already}} {{$alreadyPlural}}</span>
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                         <h2 class="mb-4">Привіт, я йду з тобою?</h2>
                         <p>Саме такі випадковості і створюють непевершені моменти в житті!</p>
                         <h3><a href="{{route('single', $pet->id)}}">{{$pet->name}}</a></h3>
-                        <span class="price">вік {{\App\Models\Pet::agePet($pet->age_month)}} (куратор тел. {{$pet->phone_number}})</span>
+                        <span class="price">вік {{$pet->ageYearMonth}} (куратор тел. {{$pet->phone_number}})</span>
                         <br>
                         <span class="price">м. {{$pet->city}}</span>
                     </div>

@@ -13,6 +13,8 @@ class Pet extends Model
     use HasFactory;
     use Searchable;
 
+    protected const GENDER_MALE = 'male';
+    protected const GENDER_FEMALE = 'female';
     protected const PETPARAMS = [
         'sterilization', 'vaccination', 'special', 'guardianship', 'adopted'
     ];
@@ -46,6 +48,19 @@ class Pet extends Model
     public function patrons()
     {
         return $this->belongsTo(Patron::class);
+    }
+
+    private function genders()
+    {
+        return [
+            self::GENDER_MALE => 'Самець',
+            self::GENDER_FEMALE => 'Самиця',
+        ];
+    }
+
+    protected function getGenderTitleAttribute()
+    {
+        return $this->genders()[$this->sex];
     }
 
     public static function uploadPhoto($data)
@@ -91,6 +106,11 @@ class Pet extends Model
         return ($num % 10 == 1 && $num % 100 != 11) ? $forms[0] : ($num % 10 >= 2 && $num % 10 <= 4 && ($num % 100 < 10 || $num % 100 >= 20) ? $forms[1] : $forms[2]);
     }
 
+    protected function getAgeYearMonthAttribute()
+    {
+        return self::agePet($this->age_month);
+    }
+
     public static function speciesPet($species)
     {
         switch ($species) {
@@ -111,6 +131,11 @@ class Pet extends Model
                 break;
         }
         return asset("assets/front/images/icon-{$spec}.png");
+    }
+
+    protected function getSpeciesPictureAttribute()
+    {
+        return self::speciesPet($this->species);
     }
 
     public static function petParams(StoreRequest $request)

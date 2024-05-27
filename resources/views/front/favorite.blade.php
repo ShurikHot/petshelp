@@ -31,7 +31,7 @@
                                                 </td>
 
                                                 <td class="product-name">
-                                                    <img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt="">
+                                                    <img src="{{$pet->speciesPicture}}" alt="">
                                                     <h5><a href="{{route('single', $pet->id)}}">{{$pet->name}}</a></h5>
                                                 </td>
 

@@ -60,6 +60,8 @@ class PetController extends Controller
             return Pet::query()->get()->where('adopted', '=', '1')->count();
         });
 
+        $alreadyPlural = Pet::plural(['хвостик', 'хвостика', 'хвостиків'], $already);
+
         $slidersJson = Cache::get('sliders');
         if ($slidersJson) {
             $slidersArray = json_decode($slidersJson, true);
@@ -69,7 +71,7 @@ class PetController extends Controller
             Cache::put('sliders', $sliders->toJson(), 3600);
         }
 
-        return view('front.index', compact('frontPets', 'randomPet', 'already', 'sliders'));
+        return view('front.index', compact('frontPets', 'randomPet', 'already', 'alreadyPlural', 'sliders'));
     }
 
     public function show($species)

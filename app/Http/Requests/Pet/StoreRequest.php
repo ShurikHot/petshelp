@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
             'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
-            'sex' => 'required|in:"Самець","Самиця"',
+            'sex' => 'required|in:"male","female"',
             'breed' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'city' => 'required|string|max:255|min:2',

@@ -58,20 +58,21 @@ class PetController extends Controller
      */
     public function show($species)
     {
+        $pets = Pet::query();
         switch ($species) {
             case 'dog':
-                $pets = Pet::query()->where('species', '=', 'Собака')->paginate(5);
+                $pets->where('species', '=', 'Собака');
                 break;
             case 'cat':
-                $pets = Pet::query()->where('species', '=', 'Кіт')->paginate(5);
+                $pets->where('species', '=', 'Кіт');
                 break;
             case 'other':
-                $pets = Pet::query()->whereNotIn('species', ['Кіт', 'Собака'])->paginate(5);
+                $pets->whereNotIn('species', ['Кіт', 'Собака']);
                 break;
             default:
-                $pets = Pet::query()->paginate(5);
                 $species = '';
         }
+        $pets = $pets->paginate(5);
         return view('admin.pets.index', compact('pets', 'species'));
     }
 

@@ -16,7 +16,7 @@
                     <a href="{{$path}}" class="image-popup"><img class="img-fluid border-radius-15" src="{{$path}}" alt="Colorlib Template"></a>
     			</div>
     			<div class="col-lg-6 product-details pl-md-5 ftco-animate species-logo">
-                    <img src="{{\App\Models\Pet::speciesPet($pet->species)}}" alt="">
+                    <img src="{{$pet->speciesPicture}}" alt="">
                     @if($pet->adopted)
                         <span>Тварина вже має дім</span>
                     @elseif($pet->guardianship)
@@ -27,11 +27,11 @@
                         <tbody>
                             <tr>
                                 <td>Стать</td>
-                                <td>{{$pet->sex}}</td>
+                                <td>{{$pet->genderTitle}}</td>
                             </tr>
                             <tr>
                                 <td>Вік</td>
-                                <td>{{\App\Models\Pet::agePet($pet->age_month)}}</td>
+                                <td>{{$pet->ageYearMonth}}</td>
                             </tr>
                             <tr>
                                 <td>Порода</td>

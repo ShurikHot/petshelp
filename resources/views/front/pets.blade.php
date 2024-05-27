@@ -36,13 +36,13 @@
                             <div class="form-group">
                                 <label for="sex" class="font-weight-bold">Стать тварини:</label><br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="sex_male" name="sex[]" value="Самець"
-                                        {{ (request()->has('sex') && request()->input('sex')[0] === 'Самець') ? 'checked' : ''}}>
+                                    <input class="form-check-input" type="radio" id="sex_male" name="sex[]" value="male"
+                                        {{ (request()->has('sex') && request()->input('sex')[0] === 'male') ? 'checked' : ''}}>
                                     <label class="form-check-label" for="sex_male">Самець</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="sex_female" name="sex[]" value="Самиця"
-                                        {{ (request()->has('sex') && request()->input('sex')[0] === 'Самиця') ? 'checked' : ''}}>
+                                    <input class="form-check-input" type="radio" id="sex_female" name="sex[]" value="female"
+                                        {{ (request()->has('sex') && request()->input('sex')[0] === 'female') ? 'checked' : ''}}>
                                     <label class="form-check-label" for="sex_female">Самиця</label>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
 
                         </div>
                     @endforeach
-                @elseif((isset($_GET['search']) || \App\Http\Controllers\PetController::getFilters()) && !count($pets))
+                @elseif((isset($_GET['search']) || !empty($_REQUEST)) && !count($pets))
                     <div class="col text-center">
                         <h5>За вашим запитом не знайдено жодної тварини...</h5>
                     </div>

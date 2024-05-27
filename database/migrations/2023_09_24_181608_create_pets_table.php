@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->tinyInteger('age_month')->unsigned();
             $table->enum('species', ['Собака', 'Кіт', 'Гризун', 'Пташка', 'Інше']);
-            $table->enum('sex', ['Самець', 'Самиця']);
+            $table->enum('sex', ['male', 'female']);
             $table->string('breed')->nullable();
             $table->string('color')->nullable();
             $table->boolean('sterilization')->default(0);

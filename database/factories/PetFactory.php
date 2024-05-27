@@ -20,7 +20,7 @@ class PetFactory extends Factory
             'name' => fake()->firstName,
             'age_month' => fake()->numberBetween(1, 50),
             'species' => fake()->randomElement(['Собака', 'Кіт', 'Гризун', 'Пташка', 'Інше']),
-            'sex' => fake()->randomElement(['Самець', 'Самиця']),
+            'sex' => fake()->randomElement(['male', 'female']),
             'breed' => ucfirst(fake()->word),
             'color' => fake()->colorName,
             'sterilization' => fake()->boolean,
