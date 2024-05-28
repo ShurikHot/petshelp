@@ -7,7 +7,7 @@
 <br>
 
 <li>Implemented the ability to build the development environment and run the application using  <b>Docker</b> (based on <b>Laravel Sail</b>)</li>
-<li>Сonvenient admin part for managing users, pets, slides on the main page, and newsletters for subscribers</li>
+<li>Сonvenient admin part for managing users, pets, slides on the main page, and newsletters for subscribers (login: admin@admin.com, password - 111)</li>
 <li>Full text search using <b>MeiliSearch</b> (based on the <b>Laravel Scout</b>)</li>
 <li>Additional search options using <b>MeiliSearch</b> (by gender, vaccination status, other special features) </li>
 <li>Caching frequent queries and some parts of pages using <b>Redis</b></li>

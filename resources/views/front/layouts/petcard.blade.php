@@ -15,7 +15,7 @@
     <div class="text py-3 pb-4 px-3 text-center border-radius-15 petcard-back">
         <h3><a href="{{route('single', $pet->id)}}">{{$pet->name}}</a></h3>
         <div class="row">
-            <div class="col-6 species-logo"><img src="{{$pet->speciesPicture}}" alt=""></div>
+            <div class="col-6 species-logo"><img src="{{asset("assets/front/images/icon-{$pet->species}.png")}}" alt=""></div>
             <div class="col-6"><span class="price-sale">{{$pet->genderTitle}}</span></div>
         </div>
         <div class="row">

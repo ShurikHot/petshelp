@@ -16,9 +16,9 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $cust_title = ' - Список слайдерів';
+        $customTitle = ' - Список слайдерів';
         $sliders = Slider::query()->paginate(5);
-        return view('admin.sliders.index', compact('cust_title', 'sliders'));
+        return view('admin.sliders.index', compact('customTitle', 'sliders'));
     }
 
     /**
@@ -28,8 +28,8 @@ class SliderController extends Controller
      */
     public function create()
     {
-        $cust_title = ' - Новий слайд';
-        return view('admin.sliders.create', compact('cust_title'));
+        $customTitle = ' - Новий слайд';
+        return view('admin.sliders.create', compact('customTitle'));
     }
 
     /**
@@ -62,8 +62,8 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        $cust_title = ' - Редагування слайду ' . $slider->name;
-        return view('admin.sliders.edit', compact('slider', 'cust_title'));
+        $customTitle = ' - Редагування слайду ' . $slider->name;
+        return view('admin.sliders.edit', compact('slider', 'customTitle'));
     }
 
     /**

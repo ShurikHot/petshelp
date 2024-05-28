@@ -16,7 +16,7 @@
                     <a href="{{$path}}" class="image-popup"><img class="img-fluid border-radius-15" src="{{$path}}" alt="Colorlib Template"></a>
     			</div>
     			<div class="col-lg-6 product-details pl-md-5 ftco-animate species-logo">
-                    <img src="{{$pet->speciesPicture}}" alt="">
+                    <img src="{{asset("assets/front/images/icon-{$pet->species}.png")}}" alt="">
                     @if($pet->adopted)
                         <span>Тварина вже має дім</span>
                     @elseif($pet->guardianship)
@@ -177,4 +177,4 @@
     </section>
 
 @endsection
-@section('title', $cust_title ?? '')
+@section('title', $customTitle ?? '')

@@ -19,4 +19,4 @@
 </section>
 
 @endsection
-@section('title', $cust_title ?? '')
+@section('title', $customTitle ?? '')

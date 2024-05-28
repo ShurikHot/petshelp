@@ -74,9 +74,9 @@ class UserController extends Controller
             $user->pets;
             switch ($item) {
                 case 'favorite':
-                    return view('front.favorite', ['user' => $user, 'cust_title' => ' :: Улюбленці']);
+                    return view('front.favorite', ['user' => $user, 'customTitle' => ' :: Улюбленці']);
                 default:
-                    return view('front.account', ['user' => $user, 'cust_title' => ' :: Аккаунт']);
+                    return view('front.account', ['user' => $user, 'customTitle' => ' :: Аккаунт']);
             }
         }
         return redirect()->route('login');

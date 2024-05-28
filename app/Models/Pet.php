@@ -13,11 +13,19 @@ class Pet extends Model
     use HasFactory;
     use Searchable;
 
-    protected const GENDER_MALE = 'male';
-    protected const GENDER_FEMALE = 'female';
-    protected const PETPARAMS = [
-        'sterilization', 'vaccination', 'special', 'guardianship', 'adopted'
+    public const GENDERS = [
+        'male' => 'Самець',
+        'female' => 'Самиця',
     ];
+
+    public const SPECIES = [
+        'dog' => 'Собака',
+        'cat' => 'Кіт',
+        'rodent' => 'Гризун',
+        'bird' => 'Пташка',
+        'ets' => 'Інше',
+    ];
+    protected const PETPARAMS = ['sterilization', 'vaccination', 'special', 'guardianship', 'adopted'];
 
     protected $fillable = [
         'name',
@@ -50,17 +58,14 @@ class Pet extends Model
         return $this->belongsTo(Patron::class);
     }
 
-    private function genders()
-    {
-        return [
-            self::GENDER_MALE => 'Самець',
-            self::GENDER_FEMALE => 'Самиця',
-        ];
-    }
-
     protected function getGenderTitleAttribute()
     {
-        return $this->genders()[$this->sex];
+        return self::GENDERS[$this->sex];
+    }
+
+    protected function getSpecieTitleAttribute()
+    {
+        return self::SPECIES[$this->species];
     }
 
     public static function uploadPhoto($data)
@@ -111,33 +116,6 @@ class Pet extends Model
         return self::agePet($this->age_month);
     }
 
-    public static function speciesPet($species)
-    {
-        switch ($species) {
-            case 'Собака':
-                $spec = 'dog';
-                break;
-            case 'Кіт':
-                $spec = 'cat';
-                break;
-            case 'Гризун':
-                $spec = 'rodent';
-                break;
-            case 'Пташка':
-                $spec = 'bird';
-                break;
-            case 'Інше':
-                $spec = 'ets';
-                break;
-        }
-        return asset("assets/front/images/icon-{$spec}.png");
-    }
-
-    protected function getSpeciesPictureAttribute()
-    {
-        return self::speciesPet($this->species);
-    }
-
     public static function petParams(StoreRequest $request)
     {
         foreach (self::PETPARAMS as $param) {
@@ -148,7 +126,7 @@ class Pet extends Model
 
     public function scopeNotAdopted(Builder $query)
     {
-        $query->where('adopted', '=', '0');
+        $query->where('adopted', '0');
     }
 
     public function searchableAs()

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Pet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +20,8 @@ class PetFactory extends Factory
         return [
             'name' => fake()->firstName,
             'age_month' => fake()->numberBetween(1, 50),
-            'species' => fake()->randomElement(['Собака', 'Кіт', 'Гризун', 'Пташка', 'Інше']),
-            'sex' => fake()->randomElement(['male', 'female']),
+            'species' => fake()->randomElement(array_keys(Pet::SPECIES)),
+            'sex' => fake()->randomElement(array_keys(Pet::GENDERS)),
             'breed' => ucfirst(fake()->word),
             'color' => fake()->colorName,
             'sterilization' => fake()->boolean,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Pet;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +18,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->tinyInteger('age_month')->unsigned();
-            $table->enum('species', ['Собака', 'Кіт', 'Гризун', 'Пташка', 'Інше']);
-            $table->enum('sex', ['male', 'female']);
+            $table->enum('species', array_keys(Pet::SPECIES));
+            $table->enum('sex', array_keys(Pet::GENDERS));
             $table->string('breed')->nullable();
             $table->string('color')->nullable();
             $table->boolean('sterilization')->default(0);

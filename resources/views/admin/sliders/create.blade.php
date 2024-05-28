@@ -96,5 +96,5 @@
             </div>
         </div>
 
-    @section('title', $cust_title ?? '')
+    @section('title', $customTitle ?? '')
 @endsection

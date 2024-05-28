@@ -35,16 +35,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="sex" class="font-weight-bold">Стать тварини:</label><br>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="sex_male" name="sex[]" value="male"
-                                        {{ (request()->has('sex') && request()->input('sex')[0] === 'male') ? 'checked' : ''}}>
-                                    <label class="form-check-label" for="sex_male">Самець</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="sex_female" name="sex[]" value="female"
-                                        {{ (request()->has('sex') && request()->input('sex')[0] === 'female') ? 'checked' : ''}}>
-                                    <label class="form-check-label" for="sex_female">Самиця</label>
-                                </div>
+                                @foreach($genders as $key => $value)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="sex_{{$key}}" name="sex[]" value="{{$key}}"
+                                            {{ (request()->has('sex') && request()->input('sex')[0] === $key) ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="sex_{{$key}}">{{$value}}</label>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 
@@ -116,4 +113,4 @@
     </section>
 
 @endsection
-@section('title', $cust_title ?? '')
+@section('title', $customTitle ?? '')

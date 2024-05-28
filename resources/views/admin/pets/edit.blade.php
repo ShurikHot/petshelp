@@ -34,11 +34,9 @@
                         <div class="form-group" bis_skin_checked="1">
                             <label for="species">Вид тварини*</label>
                             <select class="form-control @error('species') is-invalid @enderror" id="species" name="species">
-                                <option @if($pet->species == "Собака") selected @endif>Собака</option>
-                                <option @if($pet->species == "Кіт") selected @endif>Кіт</option>
-                                <option @if($pet->species == "Гризун") selected @endif>Гризун</option>
-                                <option @if($pet->species == "Пташка") selected @endif>Пташка</option>
-                                <option @if($pet->species == "Інше") selected @endif>Інше</option>
+                                @foreach($species as $key=>$value)
+                                    <option @if($pet->species == $key) selected @endif>{{$value}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -46,8 +44,9 @@
                         <div class="form-group" bis_skin_checked="1">
                             <label for="sex">Стать тварини*</label>
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex">
-                                <option @if($pet->sex == "male") selected @endif value="male">Самець</option>
-                                <option @if($pet->sex == "female") selected @endif value="female">Самиця</option>
+                                @foreach($genders as $key=>$value)
+                                    <option @if($pet->sex == $key) selected @endif value="{{$key}}">{{$value}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -213,5 +212,5 @@
             </div>
         </div>
 
-    @section('title', $cust_title ?? '')
+    @section('title', $customTitle ?? '')
 @endsection

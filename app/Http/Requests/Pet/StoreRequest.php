@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Pet;
 
+use App\Models\Pet;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -23,11 +24,13 @@ class StoreRequest extends FormRequest
      */
     public function rules()
     {
+        $genders = implode(',', array_keys(Pet::GENDERS));
+        $species = implode(',', array_keys(Pet::SPECIES));
         return [
             'name' => 'required|string|max:255|min:2',
             'age_month' => 'required|integer',
-            'species' => 'required|in:"Собака", "Кіт", "Гризун", "Пташка", "Інше"',
-            'sex' => 'required|in:"male","female"',
+            'species' => 'required|in:' . $species,
+            'sex' => 'required|in:' . $genders,
             'breed' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'city' => 'required|string|max:255|min:2',

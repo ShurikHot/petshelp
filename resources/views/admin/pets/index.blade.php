@@ -54,7 +54,7 @@
                                 <tr>
                                     <td class="text-center">{{$pet->id}}</td>
                                     <td>{{$pet->name}}</td>
-                                    <td>{{$pet->species}}</td>
+                                    <td>{{$pet->specieTitle}}</td>
                                     <td>{{$pet->genderTitle}}</td>
                                     <td>{{$pet->age_month}}</td>
                                     <td>{{$pet->breed}}</td>
@@ -92,5 +92,5 @@
         </section>
         <!-- /.content -->
 
-    @section('title', $cust_title ?? '')
+    @section('title', $customTitle ?? '')
 @endsection

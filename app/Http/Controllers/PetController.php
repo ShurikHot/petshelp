@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\UpRaitingJob;
 use App\Models\Pet;
 use App\Models\Rating;
 use App\Models\Slider;
@@ -57,7 +56,7 @@ class PetController extends Controller
         }
 
         $already = Cache::remember('already', 86400, function () {
-            return Pet::query()->get()->where('adopted', '=', '1')->count();
+            return Pet::query()->get()->where('adopted', '1')->count();
         });
 
         $alreadyPlural = Pet::plural(['хвостик', 'хвостика', 'хвостиків'], $already);
@@ -76,7 +75,8 @@ class PetController extends Controller
 
     public function show($species)
     {
-        $cust_title = ' :: Пошук друга';
+        $customTitle = ' :: Пошук друга';
+        $genders = Pet::GENDERS;
         $searchQuery = $_REQUEST['search'] ?? '';
         $filters = self::getFilters();
 
@@ -89,32 +89,18 @@ class PetController extends Controller
                     $pets->where($key, $value);
                 }
             }
-
-            switch ($species) {
-                case 'dog':
-                    $pets->where('species', '=', 'Собака');
-                    break;
-                case 'cat':
-                    $pets->where('species', '=', 'Кіт');
-                    break;
-                case 'rodent':
-                    $pets->where('species', '=', 'Гризун');
-                    break;
-                case 'bird':
-                    $pets->where('species', '=', 'Пташка');
-                    break;
-                default:
-                    $species = '';
+            if ($species != 'all') {
+                $pets->where('species', $species);
             }
             $pets = $pets->notAdopted()->paginate(12);
         }
-        return view('front.pets', compact('pets', 'species', 'cust_title'));
+        return view('front.pets', compact('pets', 'species', 'genders', 'customTitle'));
     }
 
     public function single($id)
     {
         $pet = Pet::query()->find($id);
-        $cust_title = ' :: ' . $pet->name;
+        $customTitle = ' :: ' . $pet->name;
 
         if (Auth::user()) {
             $user = Auth::user();
@@ -125,14 +111,14 @@ class PetController extends Controller
         }
 
         try {
-            $related = Pet::query()->where('species', '=', $pet->species)->notAdopted()->get()->random(4);
+            $related = Pet::query()->where('species', $pet->species)->notAdopted()->get()->random(4);
         } catch (InvalidArgumentException $e) {
-            $related = Pet::query()->where('species', '=', $pet->species)->notAdopted()->paginate(4);
+            $related = Pet::query()->where('species', $pet->species)->notAdopted()->paginate(4);
         }
 
         Rating::upRating($id);
 
-        return view('front.single', compact('pet', 'related', 'is_fav', 'cust_title'));
+        return view('front.single', compact('pet', 'related', 'is_fav', 'customTitle'));
     }
 
     public static function getFilters()

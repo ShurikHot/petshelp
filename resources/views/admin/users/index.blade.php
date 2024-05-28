@@ -83,5 +83,5 @@
 
         </section>
         <!-- /.content -->
-    @section('title', $cust_title ?? '')
+    @section('title', $customTitle ?? '')
 @endsection

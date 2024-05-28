@@ -12,11 +12,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::any('/account/{item}', 'UserController@account')->name('account');
 });
 
-Route::view('/guardianship', 'front.pages.guardianship', ['cust_title' => ' :: Опікунство'])->name('guardianship');
-Route::view('/volunteer', 'front.pages.volunteer', ['cust_title' => ' :: Волонтерство'])->name('volunteer');
-Route::view('/about', 'front.pages.about', ['cust_title' => ' :: Про нас'])->name('about');
-Route::view('/partners', 'front.pages.partners', ['cust_title' => ' :: Партнери'])->name('partners');
-Route::view('/contacts', 'front.pages.contacts', ['cust_title' => ' :: Контакти'])->name('contacts');
+Route::view('/guardianship', 'front.pages.guardianship', ['customTitle' => ' :: Опікунство'])->name('guardianship');
+Route::view('/volunteer', 'front.pages.volunteer', ['customTitle' => ' :: Волонтерство'])->name('volunteer');
+Route::view('/about', 'front.pages.about', ['customTitle' => ' :: Про нас'])->name('about');
+Route::view('/partners', 'front.pages.partners', ['customTitle' => ' :: Партнери'])->name('partners');
+Route::view('/contacts', 'front.pages.contacts', ['customTitle' => ' :: Контакти'])->name('contacts');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'MainController@index')->name('admin.index');
@@ -44,4 +44,4 @@ Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fu
 
 /* API-practice */
 Route::post('/weather', 'App\Http\Controllers\Api\TestApiController@weatherApi');
-Route::any('/spotify/{id}', 'App\Http\Controllers\Api\TestApiController@spotifyApi');
+//Route::any('/spotify/{id}', 'App\Http\Controllers\Api\TestApiController@spotifyApi');

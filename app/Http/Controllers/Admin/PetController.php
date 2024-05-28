@@ -16,9 +16,9 @@ class PetController extends Controller
      */
     public function index()
     {
-        $cust_title = ' :: Список тварин';
+        $customTitle = ' :: Список тварин';
         $pets = Pet::query()->paginate(5);
-        return view('admin.pets.index', compact('pets', 'cust_title'));
+        return view('admin.pets.index', compact('pets', 'customTitle'));
     }
 
     /**
@@ -28,8 +28,10 @@ class PetController extends Controller
      */
     public function create()
     {
-        $cust_title = ' :: Нова тварина';
-        return view('admin.pets.create', compact('cust_title'));
+        $customTitle = ' :: Нова тварина';
+        $species = Pet::SPECIES;
+        $genders = Pet::GENDERS;
+        return view('admin.pets.create', compact('species', 'genders', 'customTitle'));
     }
 
     /**
@@ -61,13 +63,13 @@ class PetController extends Controller
         $pets = Pet::query();
         switch ($species) {
             case 'dog':
-                $pets->where('species', '=', 'Собака');
+                $pets->where('species', 'dog');
                 break;
             case 'cat':
-                $pets->where('species', '=', 'Кіт');
+                $pets->where('species', 'cat');
                 break;
             case 'other':
-                $pets->whereNotIn('species', ['Кіт', 'Собака']);
+                $pets->whereNotIn('species', ['dog', 'cat']);
                 break;
             default:
                 $species = '';
@@ -84,8 +86,10 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        $cust_title = ' :: Редагування тварини ' . $pet->name;
-        return view('admin.pets.edit', compact('pet', 'cust_title'));
+        $customTitle = ' :: Редагування тварини ' . $pet->name;
+        $species = Pet::SPECIES;
+        $genders = Pet::GENDERS;
+        return view('admin.pets.edit', compact('pet', 'species', 'genders', 'customTitle'));
     }
 
     /**
